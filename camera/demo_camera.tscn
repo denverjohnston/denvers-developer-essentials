@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://c6u2brpcp8aw5"]
 
-[ext_resource type="Shader" uid="uid://cc8jssp74k2kd" path="res://shaders/checker_pattern.gdshader" id="1_5aoly"]
-[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://player_camera/player_camera.gd" id="1_8lhgh"]
+[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://camera/player_camera.gd" id="1_8lhgh"]
+[ext_resource type="Material" uid="uid://dus1sriy6vfy4" path="res://shaders/light_checker.tres" id="2_bdlc2"]
+[ext_resource type="PackedScene" uid="uid://big73griq3r2e" path="res://_demo/demo_hud.tscn" id="3_bdlc2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_d72vx"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -15,14 +16,11 @@ background_mode = 2
 sky = SubResource("Sky_8lhgh")
 glow_enabled = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fnpht"]
-render_priority = 0
-shader = ExtResource("1_5aoly")
-shader_parameter/tile_scale = 8.0
-shader_parameter/color_a = Color(0.92, 0.92, 0.92, 1)
-shader_parameter/color_b = Color(1, 1, 1, 1)
-
 [node name="Node3D" type="Node3D" unique_id=1709376910]
+
+[node name="HUD" parent="." unique_id=826208792 instance=ExtResource("3_bdlc2")]
+instructions_text = "Use mouse or arrow keys to rotate camera"
+description_text = "Camera rotation using Quaternions"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1125553505]
 environment = SubResource("Environment_d5w7x")
@@ -33,8 +31,8 @@ shadow_enabled = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=933348237]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-size = Vector3(20, 1, 20)
-material = SubResource("ShaderMaterial_fnpht")
+size = Vector3(100, 1, 100)
+material = ExtResource("2_bdlc2")
 
 [node name="PlayerCamera" type="Node3D" parent="." unique_id=1820043487 node_paths=PackedStringArray("camera")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)

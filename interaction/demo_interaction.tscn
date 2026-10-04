@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://bhmbxgsbxvwf0"]
 
-[ext_resource type="Script" uid="uid://d15ck1mwj887v" path="res://player_interact/interact_hud.gd" id="1_c5xpk"]
-[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://player_camera/player_camera.gd" id="1_dms1v"]
-[ext_resource type="Shader" uid="uid://cc8jssp74k2kd" path="res://shaders/checker_pattern.gdshader" id="1_k5f1u"]
-[ext_resource type="Script" uid="uid://hbic4ri26k0i" path="res://player_interact/player_interact.gd" id="2_sj23n"]
-[ext_resource type="PackedScene" uid="uid://u2sdi87nv01y" path="res://player_interact/item_battery.tscn" id="3_rg5w8"]
+[ext_resource type="PackedScene" uid="uid://big73griq3r2e" path="res://_demo/demo_hud.tscn" id="1_a3skd"]
+[ext_resource type="Script" uid="uid://d15ck1mwj887v" path="res://interaction/interact_hud.gd" id="1_c5xpk"]
+[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://camera/player_camera.gd" id="1_dms1v"]
+[ext_resource type="Material" uid="uid://dus1sriy6vfy4" path="res://shaders/light_checker.tres" id="2_cwaqq"]
+[ext_resource type="Script" uid="uid://hbic4ri26k0i" path="res://interaction/interactor.gd" id="2_sj23n"]
+[ext_resource type="PackedScene" uid="uid://u2sdi87nv01y" path="res://interaction/item_battery.tscn" id="3_rg5w8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rci45"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -17,13 +18,6 @@ sky_material = SubResource("ProceduralSkyMaterial_rci45")
 background_mode = 2
 sky = SubResource("Sky_dms1v")
 glow_enabled = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5aoly"]
-render_priority = 0
-shader = ExtResource("1_k5f1u")
-shader_parameter/tile_scale = 16.0
-shader_parameter/color_a = Color(0.84, 0.84, 0.84, 1)
-shader_parameter/color_b = Color(1, 1, 1, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ng5oy"]
 
@@ -40,6 +34,10 @@ font_size = 28
 
 [node name="Node3D" type="Node3D" unique_id=2077005550]
 
+[node name="HUD" parent="." unique_id=826208792 instance=ExtResource("1_a3skd")]
+instructions_text = "Place crosshair on object to interact"
+description_text = "Interaction with objects containing data"
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2017120467]
 environment = SubResource("Environment_sj23n")
 
@@ -50,8 +48,8 @@ shadow_enabled = true
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=640669178]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
-size = Vector3(20, 1, 20)
-material = SubResource("ShaderMaterial_5aoly")
+size = Vector3(100, 1, 100)
+material = ExtResource("2_cwaqq")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1655155428]
 
@@ -59,18 +57,18 @@ material = SubResource("ShaderMaterial_5aoly")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_ng5oy")
 
-[node name="PlayerInteract" type="Node3D" parent="CharacterBody3D" unique_id=1069381764 node_paths=PackedStringArray("hud")]
+[node name="Interactor" type="Node3D" parent="CharacterBody3D" unique_id=1069381764 node_paths=PackedStringArray("hud")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 script = ExtResource("2_sj23n")
 hud = NodePath("InteractHUD")
 metadata/_custom_type_script = "uid://hbic4ri26k0i"
 
-[node name="InteractHUD" type="CanvasLayer" parent="CharacterBody3D/PlayerInteract" unique_id=782456750 node_paths=PackedStringArray("interact_label", "interact_container")]
+[node name="InteractHUD" type="CanvasLayer" parent="CharacterBody3D/Interactor" unique_id=782456750 node_paths=PackedStringArray("interact_label", "interact_container")]
 script = ExtResource("1_c5xpk")
 interact_label = NodePath("MarginContainer/InteractLabel")
 interact_container = NodePath("MarginContainer")
 
-[node name="Crosshair" type="TextureRect" parent="CharacterBody3D/PlayerInteract/InteractHUD" unique_id=1578502860]
+[node name="Crosshair" type="TextureRect" parent="CharacterBody3D/Interactor/InteractHUD" unique_id=1578502860]
 custom_minimum_size = Vector2(8, 8)
 anchors_preset = 8
 anchor_left = 0.5
@@ -85,7 +83,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_iqbsb")
 
-[node name="MarginContainer" type="MarginContainer" parent="CharacterBody3D/PlayerInteract/InteractHUD" unique_id=579165275]
+[node name="MarginContainer" type="MarginContainer" parent="CharacterBody3D/Interactor/InteractHUD" unique_id=579165275]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -96,7 +94,7 @@ theme_override_constants/margin_top = 50
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 
-[node name="InteractLabel" type="Label" parent="CharacterBody3D/PlayerInteract/InteractHUD/MarginContainer" unique_id=37123685]
+[node name="InteractLabel" type="Label" parent="CharacterBody3D/Interactor/InteractHUD/MarginContainer" unique_id=37123685]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0

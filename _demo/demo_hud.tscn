@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://big73griq3r2e"]
+
+[ext_resource type="Script" uid="uid://cbrl8fgmbo5cm" path="res://_demo/demo_hud.gd" id="1_i6224"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_ithid"]
+device = -1
+keycode = 66
+unicode = 98
+
+[sub_resource type="Shortcut" id="Shortcut_tvg7k"]
+events = [SubResource("InputEventKey_ithid")]
+
+[node name="HUD" type="CanvasLayer" unique_id=826208792]
+script = ExtResource("1_i6224")
+instructions_text = "[ADD INSTRUCTIONS]"
+description_text = "[ADD DESCRIPTION]"
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1795619342]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=709153837]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="BackToDemos" type="Button" parent="PanelContainer/MarginContainer" unique_id=22808463]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+shortcut = SubResource("Shortcut_tvg7k")
+text = "[B] Back to demos"
+
+[node name="Instructions" type="Label" parent="PanelContainer/MarginContainer" unique_id=121333522]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "[ADD INSTRUCTIONS]"
+
+[node name="Description" type="Label" parent="PanelContainer/MarginContainer" unique_id=374268252]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+text = "[ADD DESCRIPTION]"

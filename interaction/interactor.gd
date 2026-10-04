@@ -1,4 +1,4 @@
-class_name PlayerInteract
+class_name Interactor
 extends Node3D
 
 

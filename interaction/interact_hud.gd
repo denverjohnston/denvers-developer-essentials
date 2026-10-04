@@ -12,7 +12,7 @@ func _ready() -> void:
 
 
 func display(item: Item, _world_pos: Vector3) -> void:
-	var camera = get_viewport().get_camera_3d()
+	#var camera = get_viewport().get_camera_3d()
 	#var screen_pos = camera.unproject_position(world_pos)
 	
 	if !visible:

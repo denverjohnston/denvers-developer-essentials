@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://e6rb32iy6hmu"]
 
-[ext_resource type="Script" uid="uid://blthfqg6vfrh5" path="res://inventory/inventory.gd" id="1_62wf1"]
-[ext_resource type="PackedScene" uid="uid://ck6g1inil5ok8" path="res://inventory/inventory_slot.tscn" id="2_qse2j"]
-[ext_resource type="Script" uid="uid://bok1ap2em17w5" path="res://inventory/inventory_item.gd" id="3_f8i2h"]
-[ext_resource type="Resource" uid="uid://cdqmun7xbwwra" path="res://inventory/inventory_item_battery.tres" id="4_wbsyq"]
-[ext_resource type="Script" uid="uid://d3nnse88c4odb" path="res://inventory/inventory_context_menu.gd" id="5_wbsyq"]
+[ext_resource type="Script" uid="uid://blthfqg6vfrh5" path="res://inventory/inventory.gd" id="1_awb3p"]
+[ext_resource type="PackedScene" uid="uid://ck6g1inil5ok8" path="res://inventory/inventory_slot.tscn" id="2_qa0c3"]
+[ext_resource type="Script" uid="uid://bok1ap2em17w5" path="res://inventory/inventory_item.gd" id="3_57g5y"]
+[ext_resource type="Resource" uid="uid://cdqmun7xbwwra" path="res://inventory/inventory_item_battery.tres" id="4_30la4"]
+[ext_resource type="Script" uid="uid://d3nnse88c4odb" path="res://inventory/inventory_context_menu.gd" id="5_54f0f"]
+[ext_resource type="PackedScene" uid="uid://big73griq3r2e" path="res://_demo/demo_hud.tscn" id="5_qa0c3"]
 
 [node name="Inventory" type="Control" unique_id=1470137594 node_paths=PackedStringArray("grid_container", "context_menu")]
 layout_mode = 3
@@ -14,11 +15,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-script = ExtResource("1_62wf1")
-inventory_slot_scene = ExtResource("2_qse2j")
+script = ExtResource("1_awb3p")
+inventory_slot_scene = ExtResource("2_qa0c3")
 grid_container = NodePath("GridContainer")
 context_menu = NodePath("ContextMenu")
-inventory_contents = Array[ExtResource("3_f8i2h")]([ExtResource("4_wbsyq")])
+inventory_contents = Array[ExtResource("3_57g5y")]([ExtResource("4_30la4")])
+
+[node name="HUD" parent="." unique_id=826208792 instance=ExtResource("5_qa0c3")]
+instructions_text = "Left-click a slot to interact"
+description_text = "Inventory containing item data"
 
 [node name="GridContainer" type="GridContainer" parent="." unique_id=1422286297]
 layout_mode = 1
@@ -39,7 +44,7 @@ columns = 4
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("5_wbsyq")
+script = ExtResource("5_54f0f")
 button_container = NodePath("MarginContainer/VBoxContainer")
 drop = NodePath("MarginContainer/VBoxContainer/Drop")
 

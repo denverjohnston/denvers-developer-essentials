@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://blskfka0a2y3h"]
 
-[ext_resource type="Script" uid="uid://bc32ujxmaxm8j" path="res://player_controller/player_controller.gd" id="1_cjhyd"]
-[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://player_camera/player_camera.gd" id="2_keh1x"]
+[ext_resource type="Script" uid="uid://bc32ujxmaxm8j" path="res://player/player_controller.gd" id="1_cjhyd"]
+[ext_resource type="PackedScene" uid="uid://big73griq3r2e" path="res://_demo/demo_hud.tscn" id="1_r2egs"]
+[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://camera/player_camera.gd" id="2_keh1x"]
 [ext_resource type="Shader" uid="uid://cc8jssp74k2kd" path="res://shaders/checker_pattern.gdshader" id="3_ii8hb"]
+[ext_resource type="Material" uid="uid://dus1sriy6vfy4" path="res://shaders/light_checker.tres" id="4_uts0q"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2axa5"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -18,13 +20,6 @@ glow_enabled = true
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ng5oy"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2axa5"]
-render_priority = 0
-shader = ExtResource("3_ii8hb")
-shader_parameter/tile_scale = 16.0
-shader_parameter/color_a = Color(0.9, 0.9, 0.9, 1)
-shader_parameter/color_b = Color(1, 1, 1, 1)
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nep5o"]
 render_priority = 0
 shader = ExtResource("3_ii8hb")
@@ -33,6 +28,10 @@ shader_parameter/color_a = Color(0, 0, 0, 1)
 shader_parameter/color_b = Color(1, 1, 1, 1)
 
 [node name="Shaders" type="Node3D" unique_id=1201720536]
+
+[node name="HUD" parent="." unique_id=826208792 instance=ExtResource("1_r2egs")]
+instructions_text = "Browse various shaders"
+description_text = "Library of shaders"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1137543317]
 environment = SubResource("Environment_kbbbk")
@@ -44,7 +43,6 @@ shadow_enabled = true
 [node name="PlayerController" type="CharacterBody3D" parent="." unique_id=2022266851 node_paths=PackedStringArray("player_camera")]
 script = ExtResource("1_cjhyd")
 player_camera = NodePath("PlayerCamera")
-metadata/_custom_type_script = "uid://bc32ujxmaxm8j"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerController" unique_id=1294544167]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -53,13 +51,12 @@ shape = SubResource("CapsuleShape3D_ng5oy")
 [node name="PlayerCamera" type="Node3D" parent="PlayerController" unique_id=2058501844]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 script = ExtResource("2_keh1x")
-metadata/_custom_type_script = "uid://c3har02jdtusj"
 
 [node name="Floor" type="CSGBox3D" parent="." unique_id=925045927]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
-size = Vector3(20, 1, 20)
-material = SubResource("ShaderMaterial_2axa5")
+size = Vector3(100, 1, 100)
+material = ExtResource("4_uts0q")
 
 [node name="Checkerboard" type="CSGBox3D" parent="." unique_id=23818409]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
