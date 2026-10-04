@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d15ck1mwj887v" path="res://player_interact/interact_hud.gd" id="1_c5xpk"]
 [ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://player_camera/player_camera.gd" id="1_dms1v"]
+[ext_resource type="Shader" uid="uid://cc8jssp74k2kd" path="res://shaders/checker_pattern.gdshader" id="1_k5f1u"]
 [ext_resource type="Script" uid="uid://hbic4ri26k0i" path="res://player_interact/player_interact.gd" id="2_sj23n"]
 [ext_resource type="PackedScene" uid="uid://u2sdi87nv01y" path="res://player_interact/item_battery.tscn" id="3_rg5w8"]
 
@@ -16,6 +17,13 @@ sky_material = SubResource("ProceduralSkyMaterial_rci45")
 background_mode = 2
 sky = SubResource("Sky_dms1v")
 glow_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5aoly"]
+render_priority = 0
+shader = ExtResource("1_k5f1u")
+shader_parameter/tile_scale = 16.0
+shader_parameter/color_a = Color(0.84, 0.84, 0.84, 1)
+shader_parameter/color_b = Color(1, 1, 1, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ng5oy"]
 
@@ -43,6 +51,7 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
 size = Vector3(20, 1, 20)
+material = SubResource("ShaderMaterial_5aoly")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1655155428]
 
