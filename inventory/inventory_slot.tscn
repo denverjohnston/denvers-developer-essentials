@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://ck6g1inil5ok8"]
+
+[ext_resource type="Script" uid="uid://bafimkk0slech" path="res://inventory/inventory_slot.gd" id="1_refl1"]
+
+[sub_resource type="Gradient" id="Gradient_5e80m"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.17, 0.17, 0.17, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_refl1"]
+gradient = SubResource("Gradient_5e80m")
+
+[sub_resource type="Gradient" id="Gradient_nsnbm"]
+offsets = PackedFloat32Array(0.9985549)
+colors = PackedColorArray(0.40015337, 0.40015334, 0.40015334, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qse2j"]
+gradient = SubResource("Gradient_nsnbm")
+
+[sub_resource type="LabelSettings" id="LabelSettings_5e80m"]
+
+[node name="Slot" type="TextureButton" unique_id=1397500363 node_paths=PackedStringArray("item_icon", "item_count_label")]
+custom_minimum_size = Vector2(32, 32)
+offset_right = 32.0
+offset_bottom = 32.0
+texture_normal = SubResource("GradientTexture2D_refl1")
+texture_hover = SubResource("GradientTexture2D_qse2j")
+script = ExtResource("1_refl1")
+item_icon = NodePath("MarginContainer/MarginContainer/Icon")
+item_count_label = NodePath("MarginContainer/ItemCount")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1452846468]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer" unique_id=2061681953]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/MarginContainer" unique_id=457079533]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 3
+
+[node name="ItemCount" type="Label" parent="MarginContainer" unique_id=995999908]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "0"
+label_settings = SubResource("LabelSettings_5e80m")

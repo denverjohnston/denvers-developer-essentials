@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://u2sdi87nv01y"]
+
+[ext_resource type="Script" uid="uid://0mslpvooh62a" path="res://player_interact/item_battery.gd" id="1_r2egs"]
+[ext_resource type="Resource" uid="uid://okvqrjlea0ua" path="res://player_interact/item_battery.tres" id="2_1x54u"]
+[ext_resource type="Script" uid="uid://blhj1waik35qw" path="res://player_interact/interactable_area.gd" id="3_u2s3p"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fa5ty"]
+height = 0.4
+radius = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_856o3"]
+albedo_color = Color(0, 0.5529412, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ng5oy"]
+material = SubResource("StandardMaterial3D_856o3")
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fa5ty"]
+
+[node name="Battery" type="RigidBody3D" unique_id=1174595320 node_paths=PackedStringArray("area")]
+script = ExtResource("1_r2egs")
+area = NodePath("InteractableArea")
+item = ExtResource("2_1x54u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=339194988]
+shape = SubResource("CylinderShape3D_fa5ty")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=84312538]
+mesh = SubResource("CylinderMesh_ng5oy")
+
+[node name="InteractableArea" type="Area3D" parent="." unique_id=1331826565]
+script = ExtResource("3_u2s3p")
+metadata/_custom_type_script = "uid://blhj1waik35qw"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractableArea" unique_id=1411013157]
+shape = SubResource("BoxShape3D_fa5ty")

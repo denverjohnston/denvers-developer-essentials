@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://e6rb32iy6hmu"]
+
+[ext_resource type="Script" uid="uid://blthfqg6vfrh5" path="res://inventory/inventory.gd" id="1_62wf1"]
+[ext_resource type="PackedScene" uid="uid://ck6g1inil5ok8" path="res://inventory/inventory_slot.tscn" id="2_qse2j"]
+[ext_resource type="Script" uid="uid://bok1ap2em17w5" path="res://inventory/inventory_item.gd" id="3_f8i2h"]
+[ext_resource type="Resource" uid="uid://cdqmun7xbwwra" path="res://inventory/inventory_item_battery.tres" id="4_wbsyq"]
+[ext_resource type="Script" uid="uid://d3nnse88c4odb" path="res://inventory/inventory_context_menu.gd" id="5_wbsyq"]
+
+[node name="Inventory" type="Control" unique_id=1470137594 node_paths=PackedStringArray("grid_container", "context_menu")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_62wf1")
+inventory_slot_scene = ExtResource("2_qse2j")
+grid_container = NodePath("GridContainer")
+context_menu = NodePath("ContextMenu")
+inventory_contents = Array[ExtResource("3_f8i2h")]([ExtResource("4_wbsyq")])
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=1422286297]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 4
+
+[node name="ContextMenu" type="PanelContainer" parent="." unique_id=1708580635 node_paths=PackedStringArray("button_container", "drop")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_wbsyq")
+button_container = NodePath("MarginContainer/VBoxContainer")
+drop = NodePath("MarginContainer/VBoxContainer/Drop")
+
+[node name="MarginContainer" type="MarginContainer" parent="ContextMenu" unique_id=1313030722]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ContextMenu/MarginContainer" unique_id=353964444]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="ContextMenu/MarginContainer/VBoxContainer" unique_id=1652772112]
+layout_mode = 2
+size_flags_vertical = 0
+button_mask = 3
+text = "Equip"
+
+[node name="Button4" type="Button" parent="ContextMenu/MarginContainer/VBoxContainer" unique_id=1259957949]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Grab 1"
+
+[node name="Button3" type="Button" parent="ContextMenu/MarginContainer/VBoxContainer" unique_id=372367445]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Split"
+
+[node name="Drop" type="Button" parent="ContextMenu/MarginContainer/VBoxContainer" unique_id=1422651383]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 0
+text = "Drop"

@@ -1,0 +1,103 @@
+[gd_scene format=3 uid="uid://bhmbxgsbxvwf0"]
+
+[ext_resource type="Script" uid="uid://d15ck1mwj887v" path="res://player_interact/interact_hud.gd" id="1_c5xpk"]
+[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://player_camera/player_camera.gd" id="1_dms1v"]
+[ext_resource type="Script" uid="uid://hbic4ri26k0i" path="res://player_interact/player_interact.gd" id="2_sj23n"]
+[ext_resource type="PackedScene" uid="uid://u2sdi87nv01y" path="res://player_interact/item_battery.tscn" id="3_rg5w8"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rci45"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_dms1v"]
+sky_material = SubResource("ProceduralSkyMaterial_rci45")
+
+[sub_resource type="Environment" id="Environment_sj23n"]
+background_mode = 2
+sky = SubResource("Sky_dms1v")
+glow_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ng5oy"]
+
+[sub_resource type="Gradient" id="Gradient_iqbsb"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_iqbsb"]
+gradient = SubResource("Gradient_iqbsb")
+width = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_rg5w8"]
+font_size = 28
+
+[node name="Node3D" type="Node3D" unique_id=2077005550]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2017120467]
+environment = SubResource("Environment_sj23n")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1617391712]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=640669178]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(20, 1, 20)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1655155428]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1866709007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_ng5oy")
+
+[node name="PlayerInteract" type="Node3D" parent="CharacterBody3D" unique_id=1069381764 node_paths=PackedStringArray("hud")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("2_sj23n")
+hud = NodePath("InteractHUD")
+metadata/_custom_type_script = "uid://hbic4ri26k0i"
+
+[node name="InteractHUD" type="CanvasLayer" parent="CharacterBody3D/PlayerInteract" unique_id=782456750 node_paths=PackedStringArray("interact_label", "interact_container")]
+script = ExtResource("1_c5xpk")
+interact_label = NodePath("MarginContainer/InteractLabel")
+interact_container = NodePath("MarginContainer")
+
+[node name="Crosshair" type="TextureRect" parent="CharacterBody3D/PlayerInteract/InteractHUD" unique_id=1578502860]
+custom_minimum_size = Vector2(8, 8)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 7.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_iqbsb")
+
+[node name="MarginContainer" type="MarginContainer" parent="CharacterBody3D/PlayerInteract/InteractHUD" unique_id=579165275]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="InteractLabel" type="Label" parent="CharacterBody3D/PlayerInteract/InteractHUD/MarginContainer" unique_id=37123685]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Interact"
+label_settings = SubResource("LabelSettings_rg5w8")
+
+[node name="PlayerCamera" type="Node3D" parent="CharacterBody3D" unique_id=486803007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("1_dms1v")
+metadata/_custom_type_script = "uid://c3har02jdtusj"
+
+[node name="Battery" parent="." unique_id=1174595320 instance=ExtResource("3_rg5w8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4785553, -2.115788)

@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://cv26dd0lcs83i"]
+
+[ext_resource type="Script" uid="uid://dx07ws1lf1m88" path="res://rotation/character_body.gd" id="1_pj0nj"]
+[ext_resource type="Shader" uid="uid://cc8jssp74k2kd" path="res://shaders/checker_pattern.gdshader" id="1_qbwwx"]
+[ext_resource type="Script" uid="uid://cnfa6yhgkrobx" path="res://rotation/character_model.gd" id="2_urvh2"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cc35x"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_pj0nj"]
+sky_material = SubResource("ProceduralSkyMaterial_cc35x")
+
+[sub_resource type="Environment" id="Environment_urvh2"]
+background_mode = 2
+sky = SubResource("Sky_pj0nj")
+glow_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cjhyd"]
+render_priority = 0
+shader = ExtResource("1_qbwwx")
+shader_parameter/tile_scale = 64.0
+shader_parameter/color_a = Color(0.8879233, 0.89, 0.8277, 1)
+shader_parameter/color_b = Color(1, 1, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ng5oy"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qbwwx"]
+bottom_radius = 0.0
+height = 1.0
+radial_segments = 4
+rings = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_qbwwx"]
+font_color = Color(0, 0, 0, 1)
+
+[node name="TransformsRotation" type="Node3D" unique_id=1918844649]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1563531594]
+environment = SubResource("Environment_urvh2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=170877442]
+transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, 1, 0, -1, 1.1924881e-08, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1621414003]
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 4, 4)
+size = 5.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=2128256720]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(100, 1, 100)
+material = SubResource("ShaderMaterial_cjhyd")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=355614794]
+script = ExtResource("1_pj0nj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=490045715]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_ng5oy")
+
+[node name="Model" type="Node3D" parent="CharacterBody3D" unique_id=700675884 node_paths=PackedStringArray("character_body_3d")]
+script = ExtResource("2_urvh2")
+character_body_3d = NodePath("..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/Model" unique_id=1409877444]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.1021243, 0)
+mesh = SubResource("CylinderMesh_qbwwx")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1591523854]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer" unique_id=1877271287]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer" unique_id=1825560602]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "Arrow keys to move"
+label_settings = SubResource("LabelSettings_qbwwx")
