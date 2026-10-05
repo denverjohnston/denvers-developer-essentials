@@ -26,6 +26,7 @@ var pitch_input: float = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Capture mouse.
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	# If missing child camera, add one.
@@ -35,6 +36,12 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
 	# Handle controller and keyboard input.
 	yaw_input -= Input.get_axis("ui_left", "ui_right") * controller_sensitivity * delta
 	pitch_input -= Input.get_axis("ui_up", "ui_down") * controller_sensitivity * delta
@@ -47,7 +54,8 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Handle mouse input.
-	if event is InputEventMouseMotion:
-		yaw_input -= event.relative.x * mouse_sensitivity
-		pitch_input -= event.relative.y * mouse_sensitivity
-		pitch_input = clampf(pitch_input, -89, 89)
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		if event is InputEventMouseMotion:
+			yaw_input -= event.relative.x * mouse_sensitivity
+			pitch_input -= event.relative.y * mouse_sensitivity
+			pitch_input = clampf(pitch_input, -89, 89)

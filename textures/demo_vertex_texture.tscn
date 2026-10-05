@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://domt3b0kftc45"]
+
+[ext_resource type="PackedScene" uid="uid://bvrkmmc1mcusl" path="res://textures/texture_vertex_blending.blend" id="1_x8ynk"]
+[ext_resource type="Script" uid="uid://bc32ujxmaxm8j" path="res://player/player_controller.gd" id="6_k4ueo"]
+[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://camera/player_camera.gd" id="7_w0fqq"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_3b8l0"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_x8ynk"]
+sky_material = SubResource("ProceduralSkyMaterial_3b8l0")
+
+[sub_resource type="Environment" id="Environment_7vwqf"]
+background_mode = 2
+sky = SubResource("Sky_x8ynk")
+glow_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ng5oy"]
+
+[node name="Node3D" type="Node3D" unique_id=1021618974]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=526066681]
+environment = SubResource("Environment_7vwqf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=123069171]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="PlayerController" type="CharacterBody3D" parent="." unique_id=1198752897]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.112158, 0)
+script = ExtResource("6_k4ueo")
+metadata/_custom_type_script = "uid://bc32ujxmaxm8j"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerController" unique_id=1593883816]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_ng5oy")
+
+[node name="PlayerCamera" type="Node3D" parent="PlayerController" unique_id=1577512631]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("7_w0fqq")
+metadata/_custom_type_script = "uid://c3har02jdtusj"
+
+[node name="texture_vertex_blending" parent="." unique_id=1103821469 instance=ExtResource("1_x8ynk")]
+
+[editable path="texture_vertex_blending"]

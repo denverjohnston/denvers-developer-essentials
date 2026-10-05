@@ -9,6 +9,11 @@ const JUMP_VELOCITY = 4.5
 @export var player_camera: PlayerCamera
 
 
+func _ready() -> void:
+	if not player_camera:
+		player_camera = get_node_or_null("PlayerCamera")
+
+
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
