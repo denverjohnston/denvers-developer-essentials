@@ -28,10 +28,6 @@ var pitch_input: float = 0.0
 func _ready() -> void:
 	# Capture mouse.
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
-	# If missing child camera, add one.
-	if not has_node("Camera3D"):
-		add_child(Camera3D.new())
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

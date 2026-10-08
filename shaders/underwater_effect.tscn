@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://fgfog0y4ydq7"]
+
+[ext_resource type="Shader" uid="uid://du6gtktdxtb4g" path="res://shaders/underwater_effect.gdshader" id="1_shader"]
+[ext_resource type="Script" uid="uid://edl6wg8vhpyp" path="res://shaders/underwater_effect.gd" id="2_script"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_underwater"]
+shader = ExtResource("1_shader")
+shader_parameter/underwater_tint = Color(0.02, 0.24, 0.32, 1)
+shader_parameter/tint_strength = 0.32
+shader_parameter/distortion_strength = 0.0015
+shader_parameter/wave_frequency = 34.0
+shader_parameter/wave_speed = 1.4
+
+[node name="UnderwaterEffect" type="CanvasLayer" unique_id=1579005346]
+script = ExtResource("2_script")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=664452251]
+material = SubResource("ShaderMaterial_underwater")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

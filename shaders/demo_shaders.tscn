@@ -5,6 +5,9 @@
 [ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://camera/player_camera.gd" id="2_keh1x"]
 [ext_resource type="Shader" uid="uid://cc8jssp74k2kd" path="res://shaders/checker_pattern.gdshader" id="3_ii8hb"]
 [ext_resource type="Material" uid="uid://dus1sriy6vfy4" path="res://shaders/light_checker.tres" id="4_uts0q"]
+[ext_resource type="Script" uid="uid://bbytbvs873ie4" path="res://shaders/water.gd" id="6_no80x"]
+[ext_resource type="Shader" uid="uid://dovr0anlk2bgo" path="res://shaders/water.gdshader" id="6_wlc4i"]
+[ext_resource type="PackedScene" path="res://shaders/underwater_effect.tscn" id="7_underwater_scene"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2axa5"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -27,6 +30,21 @@ shader_parameter/tile_scale = 8.0
 shader_parameter/color_a = Color(0, 0, 0, 1)
 shader_parameter/color_b = Color(1, 1, 1, 1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_no80x"]
+render_priority = 0
+shader = ExtResource("6_wlc4i")
+shader_parameter/deep_color = Color(0.02, 0.2, 0.28, 1)
+shader_parameter/light_color = Color(0.12, 0.55, 0.58, 1)
+shader_parameter/wave_scale = 8.0
+shader_parameter/wave_speed = 1.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_wlc4i"]
+material = SubResource("ShaderMaterial_no80x")
+size = Vector3(3, 3, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ng5oy"]
+size = Vector3(3, 3, 3)
+
 [node name="Shaders" type="Node3D" unique_id=1201720536]
 
 [node name="HUD" parent="." unique_id=826208792 instance=ExtResource("1_r2egs")]
@@ -48,9 +66,12 @@ player_camera = NodePath("PlayerCamera")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_ng5oy")
 
-[node name="PlayerCamera" type="Node3D" parent="PlayerController" unique_id=2058501844]
+[node name="PlayerCamera" type="Node3D" parent="PlayerController" unique_id=2058501844 node_paths=PackedStringArray("camera")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 script = ExtResource("2_keh1x")
+camera = NodePath("Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="PlayerController/PlayerCamera" unique_id=614740249]
 
 [node name="Floor" type="CSGBox3D" parent="." unique_id=925045927]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -59,7 +80,7 @@ size = Vector3(100, 1, 100)
 material = ExtResource("4_uts0q")
 
 [node name="Checkerboard" type="CSGBox3D" parent="." unique_id=23818409]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.5, -4)
 use_collision = true
 material = SubResource("ShaderMaterial_nep5o")
 
@@ -67,3 +88,18 @@ material = SubResource("ShaderMaterial_nep5o")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 billboard = 1
 text = "Checkerboard"
+
+[node name="Water" type="Node3D" parent="." unique_id=1305469622 node_paths=PackedStringArray("area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -4)
+script = ExtResource("6_no80x")
+area = NodePath("WaterPlane/Area3D")
+underwater_effect_scene = ExtResource("7_underwater_scene")
+
+[node name="WaterPlane" type="MeshInstance3D" parent="Water" unique_id=1012092872]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+mesh = SubResource("BoxMesh_wlc4i")
+
+[node name="Area3D" type="Area3D" parent="Water/WaterPlane" unique_id=457638662]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Water/WaterPlane/Area3D" unique_id=1428774022]
+shape = SubResource("BoxShape3D_ng5oy")
