@@ -15,15 +15,15 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pku14"]
 render_priority = 0
 shader = ExtResource("4_w0fqq")
-shader_parameter/tex_r = ExtResource("7_x2j47")
-shader_parameter/tex_g = ExtResource("6_k4d0q")
+shader_parameter/tex_r = ExtResource("6_k4d0q")
+shader_parameter/tex_g = ExtResource("7_x2j47")
 shader_parameter/tex_b = ExtResource("5_msdvq")
 shader_parameter/uv_scale = 6.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jrc6j"]
 shader = ExtResource("9_x2j47")
 shader_parameter/day_horizon = Color(0.75, 0.82, 1, 1)
-shader_parameter/day_zenith = Color(0.12, 0.35, 0.75, 1)
+shader_parameter/day_zenith = Color(0.15594886, 0.40018785, 0.8559276, 1)
 shader_parameter/night_horizon = Color(0.08, 0.11, 0.2, 1)
 shader_parameter/night_zenith = Color(0.02, 0.04, 0.1, 1)
 shader_parameter/sunrise_horizon = Color(0.92021066, 0.66217554, 0.49995556, 1)
@@ -67,8 +67,6 @@ surface_material_override/0 = SubResource("ShaderMaterial_pku14")
 [node name="Environment" type="Node3D" parent="." unique_id=542855268 node_paths=PackedStringArray("world_environment")]
 script = ExtResource("8_k4d0q")
 world_environment = NodePath("WorldEnvironment")
-day_duration_seconds = 10.0
-night_duration_seconds = 5.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=1705161991]
 environment = SubResource("Environment_q74uo")
