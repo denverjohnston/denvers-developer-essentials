@@ -17,7 +17,7 @@ func _on_body_entered(body: Node3D) -> void:
 	
 	var effect := player_camera.get_node_or_null("UnderwaterEffect") as UnderwaterEffect
 	if effect:
-		effect.fade_in()
+		_configure_underwater_effect(effect)
 		return
 	
 	effect = underwater_effect_scene.instantiate() as UnderwaterEffect
@@ -25,9 +25,16 @@ func _on_body_entered(body: Node3D) -> void:
 		return
 	effect.name = "UnderwaterEffect"
 	player_camera.add_child(effect)
+	_configure_underwater_effect(effect)
 
 
 func _on_body_exited(body: Node3D) -> void:
 	var effect := body.get_node_or_null("PlayerCamera/UnderwaterEffect") as UnderwaterEffect
 	if effect:
-		effect.fade_out()
+		effect.queue_free()
+
+
+func _configure_underwater_effect(effect: UnderwaterEffect) -> void:
+	var water_surface := area.get_parent() as Node3D
+	if water_surface:
+		effect.set_water_plane(water_surface.global_position, water_surface.global_basis.y)

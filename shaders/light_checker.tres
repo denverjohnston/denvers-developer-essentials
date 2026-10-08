@@ -6,5 +6,5 @@
 render_priority = 0
 shader = ExtResource("1_guhup")
 shader_parameter/tile_scale = 64.0
-shader_parameter/color_a = Color(0.8879233, 0.89, 0.8277, 1)
-shader_parameter/color_b = Color(1, 1, 1, 1)
+shader_parameter/color_a = Color(0.8880645, 0.79595864, 0.62458503, 1)
+shader_parameter/color_b = Color(1, 0.89165515, 0.6748467, 1)

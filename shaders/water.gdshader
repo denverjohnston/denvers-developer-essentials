@@ -1,26 +1,42 @@
 shader_type spatial;
+render_mode unshaded, blend_mix, cull_disabled;
 
-uniform vec4 deep_color : source_color = vec4(0.02, 0.20, 0.28, 1.0);
-uniform vec4 light_color : source_color = vec4(0.12, 0.55, 0.58, 1.0);
-
-uniform float wave_scale = 8.0;
-uniform float wave_speed = 1.2;
-
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
+uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear;
+uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;
+uniform vec3 extinction_coefficients = vec3(0.65, 0.20, 0.08);
+uniform vec3 scattering_color : source_color = vec3(0.03, 0.30, 0.42);
+uniform vec4 reflection_color : source_color = vec4(0.48, 0.68, 0.80, 1.0);
+uniform float max_water_thickness = 20.0;
 
 void fragment() {
-	vec2 p = UV * wave_scale;
-	float wave = sin((p.x + p.y * 0.6) * 6.0 + TIME * wave_speed);
-	float blend = smoothstep(-0.2, 0.7, wave);
-	
-	ALBEDO = mix(deep_color.rgb, light_color.rgb, blend);
-	ROUGHNESS = 0.2;
-	METALLIC = 0.0;
-}
+	float raw_depth = texture(depth_texture, SCREEN_UV).r;
+	vec3 surface_world = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	vec3 surface_normal_world = normalize((MODEL_MATRIX * vec4(0.0, 1.0, 0.0, 0.0)).xyz);
 
-//void light() {
-//	// Called for every pixel for every light affecting the material.
-//	// Uncomment to replace the default light processing function with this one.
-//}
+	float water_thickness = 0.0;
+	if (FRONT_FACING) {
+		if (raw_depth > 0.000001) {
+			vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, raw_depth);
+			vec4 scene_view_h = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
+			vec3 scene_view = scene_view_h.xyz / scene_view_h.w;
+			vec3 scene_world = (INV_VIEW_MATRIX * vec4(scene_view, 1.0)).xyz;
+			bool scene_is_underwater = dot(scene_world - surface_world, surface_normal_world) < 0.0;
+			if (scene_is_underwater) {
+				water_thickness = length(scene_view - VERTEX);
+			}
+		}
+	} else {
+		water_thickness = length(VERTEX);
+	}
+	water_thickness = min(water_thickness, max_water_thickness);
+
+	vec3 transmittance = exp(-extinction_coefficients * water_thickness);
+	vec3 scene_color = texture(screen_texture, SCREEN_UV).rgb;
+	vec3 in_scattering = scattering_color * (vec3(1.0) - transmittance);
+	vec3 water_color = scene_color * transmittance + in_scattering;
+
+	float view_angle = clamp(abs(dot(normalize(NORMAL), normalize(VIEW))), 0.0, 1.0);
+	float fresnel = 0.02 + 0.98 * pow(1.0 - view_angle, 5.0);
+	ALBEDO = mix(water_color, reflection_color.rgb, fresnel);
+	ALPHA = 1.0;
+}

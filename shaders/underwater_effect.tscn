@@ -4,21 +4,26 @@
 [ext_resource type="Script" uid="uid://edl6wg8vhpyp" path="res://shaders/underwater_effect.gd" id="2_script"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_underwater"]
+render_priority = 0
 shader = ExtResource("1_shader")
-shader_parameter/underwater_tint = Color(0.02, 0.24, 0.32, 1)
-shader_parameter/tint_strength = 0.32
+shader_parameter/extinction_coefficients = Vector3(0.65, 0.2, 0.08)
+shader_parameter/scattering_color = Color(0.03, 0.3, 0.42, 1)
+shader_parameter/reflection_color = Color(0.48, 0.68, 0.8, 1)
+shader_parameter/water_plane_point = Vector3(0, 1.275, 0)
+shader_parameter/water_plane_normal = Vector3(0, 1, 0)
+shader_parameter/max_water_thickness = 20.0
 shader_parameter/distortion_strength = 0.0015
 shader_parameter/wave_frequency = 34.0
 shader_parameter/wave_speed = 1.4
 
-[node name="UnderwaterEffect" type="CanvasLayer" unique_id=1579005346]
+[sub_resource type="QuadMesh" id="QuadMesh_fullscreen"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[node name="UnderwaterEffect" type="Node3D" unique_id=1579005346]
 script = ExtResource("2_script")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=664452251]
-material = SubResource("ShaderMaterial_underwater")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
+[node name="FullscreenQuad" type="MeshInstance3D" parent="." unique_id=664452251]
+material_override = SubResource("ShaderMaterial_underwater")
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_fullscreen")
