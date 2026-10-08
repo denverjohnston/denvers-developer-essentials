@@ -10,7 +10,30 @@
 [ext_resource type="Script" uid="uid://bes00t4dsep5q" path="res://shaders/demo_skybox.gd" id="8_k4d0q"]
 [ext_resource type="Shader" uid="uid://b0xws0ucnv2kc" path="res://shaders/sky.gdshader" id="9_x2j47"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ng5oy"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jrc6j"]
+shader = ExtResource("9_x2j47")
+shader_parameter/day_horizon = Color(0.75, 0.82, 1, 1)
+shader_parameter/day_zenith = Color(0.2, 0.6, 1, 1)
+shader_parameter/night_horizon = Color(0.08, 0.11, 0.2, 1)
+shader_parameter/night_zenith = Color(0.02, 0.04, 0.1, 1)
+shader_parameter/sunrise_horizon = Color(0.9, 0.65, 0.5, 1)
+shader_parameter/sunrise_zenith = Color(0.3, 0.5, 0.8, 1)
+shader_parameter/sunset_horizon = Color(0.8, 0.3, 0.2, 1)
+shader_parameter/sunset_zenith = Color(0.34, 0.16, 0.3, 1)
+shader_parameter/evening_horizon = Color(0.08, 0.11, 0.26, 1)
+shader_parameter/evening_zenith = Color(0.015, 0.025, 0.11, 1)
+shader_parameter/moon_color = Color(0.72, 0.82, 1, 1)
+shader_parameter/time_of_day = 0.5
+shader_parameter/star_color = Color(0.75, 0.82, 1, 1)
+
+[sub_resource type="Sky" id="Sky_t03x4"]
+sky_material = SubResource("ShaderMaterial_jrc6j")
+
+[sub_resource type="Environment" id="Environment_q74uo"]
+background_mode = 2
+sky = SubResource("Sky_t03x4")
+ambient_light_source = 3
+ambient_light_sky_contribution = 0.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pku14"]
 render_priority = 0
@@ -20,49 +43,9 @@ shader_parameter/tex_g = ExtResource("7_x2j47")
 shader_parameter/tex_b = ExtResource("5_msdvq")
 shader_parameter/uv_scale = 6.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jrc6j"]
-shader = ExtResource("9_x2j47")
-shader_parameter/day_horizon = Color(0.75, 0.82, 1, 1)
-shader_parameter/day_zenith = Color(0.15594886, 0.40018785, 0.8559276, 1)
-shader_parameter/night_horizon = Color(0.08, 0.11, 0.2, 1)
-shader_parameter/night_zenith = Color(0.02, 0.04, 0.1, 1)
-shader_parameter/sunrise_horizon = Color(0.92021066, 0.66217554, 0.49995556, 1)
-shader_parameter/sunrise_zenith = Color(0.29951698, 0.4822746, 0.8356356, 1)
-shader_parameter/sunset_horizon = Color(0.79417425, 0.28060427, 0.20285092, 1)
-shader_parameter/sunset_zenith = Color(0.34, 0.16, 0.3, 1)
-shader_parameter/evening_horizon = Color(0.08, 0.11, 0.26, 1)
-shader_parameter/evening_zenith = Color(0.015, 0.025, 0.11, 1)
-shader_parameter/moon_color = Color(0.72, 0.82, 1, 1)
-shader_parameter/time_of_day = 0.50000002375
-shader_parameter/star_color = Color(0.75, 0.82, 1, 1)
-
-[sub_resource type="Sky" id="Sky_t03x4"]
-sky_material = SubResource("ShaderMaterial_jrc6j")
-
-[sub_resource type="Environment" id="Environment_q74uo"]
-background_mode = 2
-sky = SubResource("Sky_t03x4")
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ng5oy"]
 
 [node name="Node3D" type="Node3D" unique_id=1021618974]
-
-[node name="PlayerController" type="CharacterBody3D" parent="." unique_id=1198752897]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.112158, 0)
-script = ExtResource("6_k4ueo")
-metadata/_custom_type_script = "uid://bc32ujxmaxm8j"
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerController" unique_id=1593883816]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_ng5oy")
-
-[node name="PlayerCamera" type="Node3D" parent="PlayerController" unique_id=1577512631]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-script = ExtResource("7_w0fqq")
-metadata/_custom_type_script = "uid://c3har02jdtusj"
-
-[node name="texture_vertex_blending" parent="." unique_id=1103821469 instance=ExtResource("1_x8ynk")]
-
-[node name="Plane" parent="texture_vertex_blending" index="0" unique_id=1613005735]
-surface_material_override/0 = SubResource("ShaderMaterial_pku14")
 
 [node name="Environment" type="Node3D" parent="." unique_id=542855268 node_paths=PackedStringArray("world_environment")]
 script = ExtResource("8_k4d0q")
@@ -86,5 +69,23 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0
 light_color = Color(0.5882353, 0.7764706, 1, 1)
 light_energy = 0.02
 shadow_enabled = true
+
+[node name="texture_vertex_blending" parent="." unique_id=1103821469 instance=ExtResource("1_x8ynk")]
+
+[node name="Plane" parent="texture_vertex_blending" index="0" unique_id=1613005735]
+surface_material_override/0 = SubResource("ShaderMaterial_pku14")
+
+[node name="PlayerController" type="CharacterBody3D" parent="." unique_id=1198752897]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.112158, 0)
+script = ExtResource("6_k4ueo")
+metadata/_custom_type_script = "uid://bc32ujxmaxm8j"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerController" unique_id=1593883816]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_ng5oy")
+
+[node name="PlayerCamera" type="Node3D" parent="PlayerController" unique_id=356558221]
+script = ExtResource("7_w0fqq")
+metadata/_custom_type_script = "uid://c3har02jdtusj"
 
 [editable path="texture_vertex_blending"]

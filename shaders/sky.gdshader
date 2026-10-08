@@ -1,12 +1,12 @@
 shader_type sky;
 
 uniform vec3 day_horizon: source_color = vec3(0.75, 0.82, 1.0);
-uniform vec3 day_zenith: source_color = vec3(0.12, 0.35, 0.75);
+uniform vec3 day_zenith: source_color = vec3(0.2, 0.6, 1.0);
 uniform vec3 night_horizon: source_color = vec3(0.08, 0.11, 0.2);
 uniform vec3 night_zenith: source_color = vec3(0.02, 0.04, 0.10);
-uniform vec3 sunrise_horizon: source_color = vec3(0.92, 0.48, 0.5);
-uniform vec3 sunrise_zenith: source_color = vec3(0.3, 0.48, 0.76);
-uniform vec3 sunset_horizon: source_color = vec3(1.0, 0.28, 0.12);
+uniform vec3 sunrise_horizon: source_color = vec3(0.9, 0.65, 0.5);
+uniform vec3 sunrise_zenith: source_color = vec3(0.3, 0.5, 0.8);
+uniform vec3 sunset_horizon: source_color = vec3(0.8, 0.3, 0.2);
 uniform vec3 sunset_zenith: source_color = vec3(0.34, 0.16, 0.3);
 uniform vec3 evening_horizon: source_color = vec3(0.08, 0.11, 0.26);
 uniform vec3 evening_zenith: source_color = vec3(0.015, 0.025, 0.11);

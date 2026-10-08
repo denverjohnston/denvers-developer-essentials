@@ -7,18 +7,18 @@
 [ext_resource type="Material" uid="uid://dus1sriy6vfy4" path="res://shaders/light_checker.tres" id="4_uts0q"]
 [ext_resource type="Script" uid="uid://bbytbvs873ie4" path="res://shaders/water.gd" id="6_no80x"]
 [ext_resource type="Shader" uid="uid://dovr0anlk2bgo" path="res://shaders/water.gdshader" id="6_wlc4i"]
-[ext_resource type="PackedScene" path="res://shaders/underwater_effect.tscn" id="7_underwater_scene"]
+[ext_resource type="PackedScene" uid="uid://fgfog0y4ydq7" path="res://shaders/underwater_effect.tscn" id="7_underwater_scene"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2axa5"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bpr21"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 
-[sub_resource type="Sky" id="Sky_nep5o"]
-sky_material = SubResource("ProceduralSkyMaterial_2axa5")
+[sub_resource type="Sky" id="Sky_yhk8y"]
+sky_material = SubResource("ProceduralSkyMaterial_bpr21")
 
-[sub_resource type="Environment" id="Environment_kbbbk"]
+[sub_resource type="Environment" id="Environment_fdqf0"]
 background_mode = 2
-sky = SubResource("Sky_nep5o")
+sky = SubResource("Sky_yhk8y")
 glow_enabled = true
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ng5oy"]
@@ -47,16 +47,16 @@ size = Vector3(3, 3, 3)
 
 [node name="Shaders" type="Node3D" unique_id=1201720536]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=749633295]
+environment = SubResource("Environment_fdqf0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=958351444]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
 [node name="HUD" parent="." unique_id=826208792 instance=ExtResource("1_r2egs")]
 instructions_text = "Browse various shaders"
 description_text = "Library of shaders"
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1137543317]
-environment = SubResource("Environment_kbbbk")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1889168713]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
-shadow_enabled = true
 
 [node name="PlayerController" type="CharacterBody3D" parent="." unique_id=2022266851 node_paths=PackedStringArray("player_camera")]
 script = ExtResource("1_cjhyd")
