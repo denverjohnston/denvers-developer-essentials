@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://cly672ew6rl0e"]
+
+[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://camera/player_camera.gd" id="1_bg1tb"]
+[ext_resource type="Script" uid="uid://bes00t4dsep5q" path="res://shaders/demo_skybox.gd" id="1_uamwm"]
+[ext_resource type="Shader" uid="uid://b0xws0ucnv2kc" path="res://shaders/sky.gdshader" id="2_uamwm"]
+[ext_resource type="Script" uid="uid://bc32ujxmaxm8j" path="res://player/player_controller.gd" id="4_iva0n"]
+[ext_resource type="Material" uid="uid://dus1sriy6vfy4" path="res://shaders/light_checker.tres" id="4_q5coy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t03x4"]
+shader = ExtResource("2_uamwm")
+shader_parameter/day_horizon = Color(0.75, 0.82, 1, 1)
+shader_parameter/day_zenith = Color(0.12, 0.35, 0.75, 1)
+shader_parameter/night_horizon = Color(0.08, 0.11, 0.2, 1)
+shader_parameter/night_zenith = Color(0.02, 0.04, 0.1, 1)
+shader_parameter/sunrise_horizon = Color(0.92021066, 0.66217554, 0.49995556, 1)
+shader_parameter/sunrise_zenith = Color(0.29951698, 0.4822746, 0.8356356, 1)
+shader_parameter/sunset_horizon = Color(0.79417425, 0.28060427, 0.20285092, 1)
+shader_parameter/sunset_zenith = Color(0.34, 0.16, 0.3, 1)
+shader_parameter/evening_horizon = Color(0.08, 0.11, 0.26, 1)
+shader_parameter/evening_zenith = Color(0.015, 0.025, 0.11, 1)
+shader_parameter/moon_color = Color(0.72, 0.82, 1, 1)
+shader_parameter/time_of_day = 0.0
+shader_parameter/star_color = Color(0.75, 0.82, 1, 1)
+
+[sub_resource type="Sky" id="Sky_t03x4"]
+sky_material = SubResource("ShaderMaterial_t03x4")
+
+[sub_resource type="Environment" id="Environment_q5coy"]
+background_mode = 2
+sky = SubResource("Sky_t03x4")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_s862g"]
+
+[node name="DemoSkybox" type="Node3D" unique_id=194237506]
+
+[node name="Environment" type="Node3D" parent="." unique_id=264079723 node_paths=PackedStringArray("world_environment")]
+script = ExtResource("1_uamwm")
+world_environment = NodePath("WorldEnvironment")
+day_duration_seconds = 10.0
+night_duration_seconds = 5.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=1323074586]
+environment = SubResource("Environment_q5coy")
+
+[node name="Stars" type="Node3D" parent="Environment" unique_id=154919097]
+
+[node name="Sun" type="DirectionalLight3D" parent="Environment/Stars" unique_id=527482984]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+light_color = Color(1, 0.92156863, 0.8666667, 1)
+shadow_enabled = true
+
+[node name="Moon" type="DirectionalLight3D" parent="Environment/Stars" unique_id=717310222]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+light_color = Color(0.5882353, 0.7764706, 1, 1)
+light_energy = 0.02
+shadow_enabled = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=593610660]
+transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, 0, 0)
+use_collision = true
+size = Vector3(5, 50, 5)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=740518142]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -367.77502, 0)
+use_collision = true
+size = Vector3(200, 736.55, 200)
+material = ExtResource("4_q5coy")
+
+[node name="PlayerController" type="CharacterBody3D" parent="." unique_id=695872538]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14, 9.112158, 12)
+script = ExtResource("4_iva0n")
+metadata/_custom_type_script = "uid://bc32ujxmaxm8j"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerController" unique_id=1996905350]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_s862g")
+
+[node name="PlayerCamera" type="Node3D" parent="PlayerController" unique_id=1245165655]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("1_bg1tb")
+metadata/_custom_type_script = "uid://c3har02jdtusj"
