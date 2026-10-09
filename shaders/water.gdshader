@@ -30,13 +30,10 @@ void fragment() {
 	vec3 scene_color = texture(screen_texture, SCREEN_UV).rgb;
 	vec3 in_scattering = scattering_color * (vec3(1.0) - transmittance);
 
-	float view_angle = clamp(abs(dot(normalize(NORMAL), normalize(VIEW))), 0.0, 1.0);
-	float fresnel = 0.02 + 0.98 * pow(1.0 - view_angle, 5.0);
-
-	// Refracted scene is already lit, so it is emitted; the engine adds sky reflections via specular IBL.
-	EMISSION = scene_color * transmittance * (1.0 - fresnel);
-	ALBEDO = in_scattering * (1.0 - fresnel);
-	SPECULAR = 0.5;
-	ROUGHNESS = 0.05;
+	// Refracted scene is already lit, so it is emitted; the engine lights the scattering and adds a faint sky reflection.
+	EMISSION = scene_color * transmittance;
+	ALBEDO = in_scattering;
+	SPECULAR = 0.2;
+	ROUGHNESS = 0.3;
 	ALPHA = 1.0;
 }

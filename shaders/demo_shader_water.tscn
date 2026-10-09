@@ -22,7 +22,7 @@ shader_parameter/sunset_zenith = Color(0.34, 0.16, 0.3, 1)
 shader_parameter/evening_horizon = Color(0.08, 0.11, 0.26, 1)
 shader_parameter/evening_zenith = Color(0.015, 0.025, 0.11, 1)
 shader_parameter/moon_color = Color(0.72, 0.82, 1, 1)
-shader_parameter/time_of_day = 0.2730000129675
+shader_parameter/time_of_day = 0.459
 shader_parameter/star_color = Color(0.75, 0.82, 1, 1)
 
 [sub_resource type="Sky" id="Sky_af2ck"]
@@ -59,6 +59,7 @@ description_text = "Library of shaders"
 [node name="DemoSkybox" type="WorldEnvironment" parent="." unique_id=1063535309]
 environment = SubResource("Environment_2fwco")
 script = ExtResource("8_m13tu")
+time_of_day = 0.459
 metadata/_custom_type_script = "uid://bes00t4dsep5q"
 
 [node name="PlayerController" type="CharacterBody3D" parent="." unique_id=2022266851]

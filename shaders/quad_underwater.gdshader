@@ -71,13 +71,6 @@ void fragment() {
 	vec3 in_scattering = scattering_color * light_level * (vec3(1.0) - transmittance);
 	vec3 water_color = scene_color * transmittance + in_scattering;
 
-	if (crosses_surface && camera_underwater) {
-		float cosine = clamp(abs(ray_plane_dot), 0.0, 1.0);
-		float fresnel = 0.02 + 0.98 * pow(1.0 - cosine, 5.0);
-		// From below, the surface reflects the water body, not the sky.
-		water_color = mix(water_color, scattering_color * light_level, fresnel);
-	}
-
 	ALBEDO = water_color;
 	ALPHA = 1.0;
 }
