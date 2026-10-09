@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://big73griq3r2e"]
 
 [ext_resource type="Script" uid="uid://cbrl8fgmbo5cm" path="res://_demo/demo_hud.gd" id="1_i6224"]
-[ext_resource type="Theme" uid="uid://dloo02nx7yd1q" path="res://_demo/demos_theme.tres" id="2_c1un6"]
+[ext_resource type="Theme" uid="uid://dloo02nx7yd1q" path="res://_demo/demo_theme.tres" id="2_c1un6"]
 [ext_resource type="FontFile" uid="uid://brf01mj6pvqam" path="res://_demo/Rubik-VariableFont_wght.ttf" id="3_y5xed"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_ithid"]

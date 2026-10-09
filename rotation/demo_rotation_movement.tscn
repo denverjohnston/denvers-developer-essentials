@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://cv26dd0lcs83i"]
+
+[ext_resource type="PackedScene" uid="uid://big73griq3r2e" path="res://_demo/demo_hud.tscn" id="1_x070x"]
+[ext_resource type="Material" uid="uid://dus1sriy6vfy4" path="res://shaders/mat_checker.tres" id="2_3a3py"]
+[ext_resource type="Script" uid="uid://dx07ws1lf1m88" path="res://rotation/character_body.gd" id="3_fhdmu"]
+[ext_resource type="Script" uid="uid://cnfa6yhgkrobx" path="res://rotation/character_model.gd" id="4_swaad"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cc35x"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_pj0nj"]
+sky_material = SubResource("ProceduralSkyMaterial_cc35x")
+
+[sub_resource type="Environment" id="Environment_urvh2"]
+background_mode = 2
+sky = SubResource("Sky_pj0nj")
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ng5oy"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qbwwx"]
+bottom_radius = 0.0
+height = 1.0
+radial_segments = 4
+rings = 0
+
+[node name="Node3D" type="Node3D" unique_id=1918844649]
+
+[node name="HUD" parent="." unique_id=826208792 instance=ExtResource("1_x070x")]
+instructions_text = "Use arrow keys to move"
+description_text = "Rotate to movement direction"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1563531594]
+environment = SubResource("Environment_urvh2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=170877442]
+transform = Transform3D(1, 0, 0, 0, 1.1924881e-08, 1, 0, -1, 1.1924881e-08, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1621414003]
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 4, 4)
+size = 5.0
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=2128256720]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(100, 1, 100)
+material = ExtResource("2_3a3py")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=355614794]
+script = ExtResource("3_fhdmu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=490045715]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_ng5oy")
+
+[node name="Model" type="Node3D" parent="CharacterBody3D" unique_id=700675884 node_paths=PackedStringArray("character_body_3d")]
+script = ExtResource("4_swaad")
+character_body_3d = NodePath("..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/Model" unique_id=1409877444]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.1021243, 0)
+mesh = SubResource("CylinderMesh_qbwwx")

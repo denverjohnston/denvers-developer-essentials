@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://bq3pjgi4mm41c"]
+
+[ext_resource type="PackedScene" uid="uid://big73griq3r2e" path="res://_demo/demo_hud.tscn" id="1_4schw"]
+[ext_resource type="Material" uid="uid://dus1sriy6vfy4" path="res://shaders/mat_checker.tres" id="2_gbtcw"]
+[ext_resource type="Script" uid="uid://c4ohy8qmnmxvl" path="res://rotation/turret.gd" id="3_sbxgp"]
+[ext_resource type="Script" uid="uid://dx07ws1lf1m88" path="res://rotation/character_body.gd" id="4_btpbv"]
+[ext_resource type="Script" uid="uid://cnfa6yhgkrobx" path="res://rotation/character_model.gd" id="5_h7n1w"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qsxr6"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_g2j01"]
+sky_material = SubResource("ProceduralSkyMaterial_qsxr6")
+
+[sub_resource type="Environment" id="Environment_d3d31"]
+background_mode = 2
+sky = SubResource("Sky_g2j01")
+glow_enabled = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_d3d31"]
+radius = 1.5
+height = 2.0
+radial_segments = 4
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ng5oy"]
+top_radius = 0.0
+bottom_radius = 1.0
+radial_segments = 4
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_d3d31"]
+top_radius = 0.0
+height = 1.0
+radial_segments = 4
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tac2n"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7qkxf"]
+bottom_radius = 0.0
+height = 1.0
+radial_segments = 4
+rings = 0
+
+[node name="Node3D" type="Node3D" unique_id=1653044156]
+
+[node name="HUD" parent="." unique_id=826208792 instance=ExtResource("1_4schw")]
+instructions_text = "Use WASD to move"
+description_text = "Rotate to look at"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1181740632]
+environment = SubResource("Environment_d3d31")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2068557412]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1083565927]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(100, 1, 100)
+material = ExtResource("2_gbtcw")
+
+[node name="Turret" type="Node3D" parent="." unique_id=288935805 node_paths=PackedStringArray("cannon", "target")]
+script = ExtResource("3_sbxgp")
+cannon = NodePath("Cannon")
+target = NodePath("../CharacterBody3D/Model")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Turret" unique_id=1627201088]
+mesh = SubResource("SphereMesh_d3d31")
+
+[node name="Cannon" type="Node3D" parent="Turret" unique_id=305696888]
+transform = Transform3D(-0.6723918, 0.34853402, -0.6512767, 7.442186e-08, 0.88069177, 0.47130662, 0.7386727, 0.3172601, -0.5928379, 0, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Turret/Cannon" unique_id=862481880]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_ng5oy")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Turret/Cannon" unique_id=1159702321]
+transform = Transform3D(1, 5.9604645e-08, -4.656613e-10, 0, -4.1909512e-08, 1.0000001, 5.960464e-08, -0.99999994, -4.3772157e-08, 1.1, 0.79, 0)
+mesh = SubResource("CylinderMesh_d3d31")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Turret/Cannon" unique_id=2072674882]
+transform = Transform3D(1, 5.9604645e-08, -4.656613e-10, 0, -4.190951e-08, 1, 5.9604638e-08, -0.9999999, -4.3772154e-08, -1.1, 0.79, 0)
+mesh = SubResource("CylinderMesh_d3d31")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1285335178]
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 5.987243, 5.875148)
+size = 5.0
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=1713460558]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7637086, 0, 2.5157204)
+script = ExtResource("4_btpbv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1076978072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_tac2n")
+
+[node name="Model" type="Node3D" parent="CharacterBody3D" unique_id=1868045503 node_paths=PackedStringArray("character_body_3d")]
+script = ExtResource("5_h7n1w")
+character_body_3d = NodePath("..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/Model" unique_id=116519293]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 1.1021243, 0)
+mesh = SubResource("CylinderMesh_7qkxf")

@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://big73griq3r2e" path="res://_demo/demo_hud.tscn" id="1_a3skd"]
 [ext_resource type="Script" uid="uid://d15ck1mwj887v" path="res://interaction/interact_hud.gd" id="1_c5xpk"]
-[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://camera/player_camera.gd" id="1_dms1v"]
-[ext_resource type="Material" uid="uid://dus1sriy6vfy4" path="res://shaders/light_checker.tres" id="2_cwaqq"]
+[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://camera/demo_camera.gd" id="1_dms1v"]
+[ext_resource type="Material" uid="uid://dus1sriy6vfy4" path="res://shaders/mat_checker.tres" id="2_cwaqq"]
 [ext_resource type="Script" uid="uid://hbic4ri26k0i" path="res://interaction/interactor.gd" id="2_sj23n"]
 [ext_resource type="PackedScene" uid="uid://u2sdi87nv01y" path="res://interaction/item_battery.tscn" id="3_rg5w8"]
 

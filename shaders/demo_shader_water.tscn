@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://blskfka0a2y3h"]
+
+[ext_resource type="Script" uid="uid://bc32ujxmaxm8j" path="res://character/character_controller.gd" id="1_cjhyd"]
+[ext_resource type="PackedScene" uid="uid://big73griq3r2e" path="res://_demo/demo_hud.tscn" id="1_r2egs"]
+[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://camera/demo_camera.gd" id="2_keh1x"]
+[ext_resource type="Material" uid="uid://dus1sriy6vfy4" path="res://shaders/mat_checker.tres" id="4_uts0q"]
+[ext_resource type="Script" uid="uid://bbytbvs873ie4" path="res://shaders/water_area.gd" id="6_no80x"]
+[ext_resource type="Shader" uid="uid://dovr0anlk2bgo" path="res://shaders/water.gdshader" id="6_wlc4i"]
+[ext_resource type="PackedScene" uid="uid://fgfog0y4ydq7" path="res://shaders/quad_underwater_effect.tscn" id="7_underwater_scene"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ng5oy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_no80x"]
+render_priority = 0
+shader = ExtResource("6_wlc4i")
+shader_parameter/extinction_coefficients = Vector3(0.65, 0.2, 0.08)
+shader_parameter/scattering_color = Color(0.03, 0.3, 0.42, 1)
+shader_parameter/max_water_thickness = 20.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_water"]
+material = SubResource("ShaderMaterial_no80x")
+size = Vector2(30, 30)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ng5oy"]
+size = Vector3(30, 3, 30)
+
+[node name="Shaders" type="Node3D" unique_id=1201720536]
+
+[node name="HUD" parent="." unique_id=826208792 instance=ExtResource("1_r2egs")]
+instructions_text = "Browse various shaders"
+description_text = "Library of shaders"
+
+[node name="PlayerController" type="CharacterBody3D" parent="." unique_id=2022266851]
+script = ExtResource("1_cjhyd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerController" unique_id=1294544167]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_ng5oy")
+
+[node name="PlayerCamera" type="Node3D" parent="PlayerController" unique_id=2058501844]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("2_keh1x")
+
+[node name="Pool" type="Node3D" parent="." unique_id=63052444]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+
+[node name="WaterPlane" type="MeshInstance3D" parent="Pool" unique_id=1012092872 node_paths=PackedStringArray("area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.31117988, -15)
+mesh = SubResource("PlaneMesh_water")
+script = ExtResource("6_no80x")
+area = NodePath("Area3D")
+underwater_effect_scene = ExtResource("7_underwater_scene")
+
+[node name="Area3D" type="Area3D" parent="Pool/WaterPlane" unique_id=457638662]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pool/WaterPlane/Area3D" unique_id=1428774022]
+shape = SubResource("BoxShape3D_ng5oy")
+
+[node name="Floor" type="CSGBox3D" parent="Pool" unique_id=201930557]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, -15)
+use_collision = true
+size = Vector3(30, 0.5, 30)
+material = ExtResource("4_uts0q")
+
+[node name="Floor2" type="CSGBox3D" parent="Pool" unique_id=1607690159]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 7.5)
+use_collision = true
+size = Vector3(32, 4, 15)
+material = ExtResource("4_uts0q")
+
+[node name="Floor4" type="CSGBox3D" parent="Pool" unique_id=1435304174]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -30.5)
+use_collision = true
+size = Vector3(32, 4, 1)
+material = ExtResource("4_uts0q")
+
+[node name="Floor3" type="CSGBox3D" parent="Pool" unique_id=580651402]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, -1.5)
+use_collision = true
+size = Vector3(30, 1, 3)
+material = ExtResource("4_uts0q")
+
+[node name="Floor5" type="CSGBox3D" parent="Pool" unique_id=1874674921]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, -4.5)
+use_collision = true
+size = Vector3(30, 1, 3)
+material = ExtResource("4_uts0q")
+
+[node name="Floor6" type="CSGBox3D" parent="Pool" unique_id=2084657410]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.5, -7.5)
+use_collision = true
+size = Vector3(30, 2, 3)
+material = ExtResource("4_uts0q")
+
+[node name="Wall" type="CSGBox3D" parent="Pool" unique_id=882500326]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5, -2, -15)
+use_collision = true
+size = Vector3(1, 4, 30)
+material = ExtResource("4_uts0q")
+
+[node name="Wall2" type="CSGBox3D" parent="Pool" unique_id=1811527686]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5, -2, -15)
+use_collision = true
+size = Vector3(1, 4, 30)
+material = ExtResource("4_uts0q")

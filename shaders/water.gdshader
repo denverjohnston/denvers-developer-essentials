@@ -1,11 +1,10 @@
 shader_type spatial;
-render_mode unshaded, blend_mix, cull_disabled;
+render_mode blend_mix, cull_disabled;
 
 uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_linear;
 uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;
 uniform vec3 extinction_coefficients = vec3(0.65, 0.20, 0.08);
 uniform vec3 scattering_color : source_color = vec3(0.03, 0.30, 0.42);
-uniform vec4 reflection_color : source_color = vec4(0.48, 0.68, 0.80, 1.0);
 uniform float max_water_thickness = 20.0;
 
 void fragment() {
@@ -33,10 +32,14 @@ void fragment() {
 	vec3 transmittance = exp(-extinction_coefficients * water_thickness);
 	vec3 scene_color = texture(screen_texture, SCREEN_UV).rgb;
 	vec3 in_scattering = scattering_color * (vec3(1.0) - transmittance);
-	vec3 water_color = scene_color * transmittance + in_scattering;
 
 	float view_angle = clamp(abs(dot(normalize(NORMAL), normalize(VIEW))), 0.0, 1.0);
 	float fresnel = 0.02 + 0.98 * pow(1.0 - view_angle, 5.0);
-	ALBEDO = mix(water_color, reflection_color.rgb, fresnel);
+
+	// Refracted scene is already lit, so it is emitted; the engine adds sky reflections via specular IBL.
+	EMISSION = scene_color * transmittance * (1.0 - fresnel);
+	ALBEDO = in_scattering * (1.0 - fresnel);
+	SPECULAR = 0.5;
+	ROUGHNESS = 0.05;
 	ALPHA = 1.0;
 }

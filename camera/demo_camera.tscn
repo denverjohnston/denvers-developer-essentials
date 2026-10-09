@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c6u2brpcp8aw5"]
 
-[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://camera/player_camera.gd" id="1_8lhgh"]
-[ext_resource type="Material" uid="uid://dus1sriy6vfy4" path="res://shaders/light_checker.tres" id="2_bdlc2"]
+[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://camera/demo_camera.gd" id="1_8lhgh"]
+[ext_resource type="Material" uid="uid://dus1sriy6vfy4" path="res://shaders/mat_checker.tres" id="2_bdlc2"]
 [ext_resource type="PackedScene" uid="uid://big73griq3r2e" path="res://_demo/demo_hud.tscn" id="3_bdlc2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_d72vx"]
@@ -37,7 +37,7 @@ material = ExtResource("2_bdlc2")
 [node name="PlayerCamera" type="Node3D" parent="." unique_id=1820043487 node_paths=PackedStringArray("camera")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 script = ExtResource("1_8lhgh")
-camera = NodePath("Camera3D")
+camera = NodePath("")
 metadata/_custom_type_script = "uid://c3har02jdtusj"
 
-[node name="Camera3D" type="Camera3D" parent="PlayerCamera" unique_id=202645579]
+[node name="Camera3D" type="Camera3D" parent="PlayerCamera" unique_id=1191628350]

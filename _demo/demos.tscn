@@ -1,14 +1,13 @@
 [gd_scene format=3 uid="uid://cv5yqpjbxk81f"]
 
 [ext_resource type="Script" uid="uid://b27htxt6od645" path="res://_demo/demos.gd" id="1_dn1tx"]
-[ext_resource type="Theme" uid="uid://dloo02nx7yd1q" path="res://_demo/demos_theme.tres" id="1_oc6sw"]
-[ext_resource type="Script" uid="uid://cfu324hmn5uf1" path="res://_demo/demos_button.gd" id="1_tqllu"]
-[ext_resource type="PackedScene" uid="uid://cv26dd0lcs83i" path="res://rotation/demo_movement_rotation.tscn" id="2_udr8e"]
-[ext_resource type="PackedScene" uid="uid://c6u2brpcp8aw5" path="res://camera/demo_camera.tscn" id="3_37f04"]
-[ext_resource type="PackedScene" uid="uid://bhmbxgsbxvwf0" path="res://interaction/demo_interaction.tscn" id="4_50fry"]
-[ext_resource type="PackedScene" uid="uid://blskfka0a2y3h" path="res://shaders/demo_shaders.tscn" id="5_4n5ks"]
-[ext_resource type="PackedScene" uid="uid://e6rb32iy6hmu" path="res://inventory/demo_inventory.tscn" id="6_tvg7k"]
-[ext_resource type="PackedScene" uid="uid://domt3b0kftc45" path="res://textures/demo_vertex_texture.tscn" id="9_gsm3r"]
+[ext_resource type="Theme" uid="uid://dloo02nx7yd1q" path="res://_demo/demo_theme.tres" id="1_oc6sw"]
+[ext_resource type="Script" uid="uid://cfu324hmn5uf1" path="res://_demo/demo_button.gd" id="1_tqllu"]
+[ext_resource type="PackedScene" uid="uid://cv26dd0lcs83i" path="res://rotation/demo_rotation_movement.tscn" id="2_udr8e"]
+[ext_resource type="PackedScene" uid="uid://blskfka0a2y3h" path="res://shaders/demo_shader_water.tscn" id="5_4n5ks"]
+[ext_resource type="PackedScene" uid="uid://bq3pjgi4mm41c" path="res://rotation/demo_rotation_lookat.tscn" id="5_gsm3r"]
+[ext_resource type="PackedScene" uid="uid://cly672ew6rl0e" path="res://shaders/demo_shader_skybox.tscn" id="6_in06j"]
+[ext_resource type="PackedScene" uid="uid://domt3b0kftc45" path="res://mesh/demo_mesh_vertex_paint.tscn" id="9_gsm3r"]
 
 [node name="Demos" type="Control" unique_id=1780301322]
 layout_mode = 3
@@ -48,56 +47,47 @@ theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 3
 
-[node name="Button" type="Button" parent="MarginContainer/Transforms" unique_id=414143632]
+[node name="RotationMovement" type="Button" parent="MarginContainer/Transforms" unique_id=414143632]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 24
-text = "Character rotation"
+text = "Rotation: Movement"
 script = ExtResource("1_tqllu")
 demo_scene = ExtResource("2_udr8e")
 
-[node name="Button2" type="Button" parent="MarginContainer/Transforms" unique_id=1676266801]
+[node name="RotationLookAt" type="Button" parent="MarginContainer/Transforms" unique_id=1676266801]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 24
-text = "First-person camera controls"
+text = "Rotation: Look at"
 script = ExtResource("1_tqllu")
-demo_scene = ExtResource("3_37f04")
+demo_scene = ExtResource("5_gsm3r")
 
-[node name="Button3" type="Button" parent="MarginContainer/Transforms" unique_id=2102646075]
+[node name="ShaderSkybox" type="Button" parent="MarginContainer/Transforms" unique_id=214104231]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 24
-text = "Interaction"
+text = "Shader: Skybox"
 script = ExtResource("1_tqllu")
-demo_scene = ExtResource("4_50fry")
+demo_scene = ExtResource("6_in06j")
 
-[node name="Button4" type="Button" parent="MarginContainer/Transforms" unique_id=214104231]
+[node name="ShaderWater" type="Button" parent="MarginContainer/Transforms" unique_id=965693449]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 24
-text = "Shaders"
+text = "Shader: Water"
 script = ExtResource("1_tqllu")
 demo_scene = ExtResource("5_4n5ks")
 
-[node name="Button5" type="Button" parent="MarginContainer/Transforms" unique_id=1506558099]
+[node name="MeshVertexPaint" type="Button" parent="MarginContainer/Transforms" unique_id=835441135]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 24
-text = "Inventory system"
-script = ExtResource("1_tqllu")
-demo_scene = ExtResource("6_tvg7k")
-
-[node name="Button6" type="Button" parent="MarginContainer/Transforms" unique_id=835441135]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 24
-text = "Vertex-painted terrain"
+text = "Mesh: VertexPaint"
 script = ExtResource("1_tqllu")
 demo_scene = ExtResource("9_gsm3r")
