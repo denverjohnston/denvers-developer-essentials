@@ -40,10 +40,15 @@ shader = ExtResource("6_wlc4i")
 shader_parameter/extinction_coefficients = Vector3(0.65, 0.2, 0.08)
 shader_parameter/scattering_color = Color(0.03, 0.3, 0.42, 1)
 shader_parameter/max_water_thickness = 20.0
+shader_parameter/wave_amplitude = 0.05
+shader_parameter/wave_length = 3.0
+shader_parameter/wave_speed = 0.5
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_water"]
 material = SubResource("ShaderMaterial_no80x")
 size = Vector2(30, 30)
+subdivide_width = 64
+subdivide_depth = 64
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ng5oy"]
 size = Vector3(30, 3, 30)

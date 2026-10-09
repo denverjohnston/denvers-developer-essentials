@@ -7,6 +7,33 @@ uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nea
 uniform vec3 extinction_coefficients = vec3(0.65, 0.20, 0.08);
 uniform vec3 scattering_color : source_color = vec3(0.03, 0.30, 0.42);
 uniform float max_water_thickness = 20.0;
+uniform float wave_amplitude = 0.02;
+uniform float wave_length = 1.5;
+uniform float wave_speed = 1.0;
+
+// Returns (height, d/dx, d/dz) of standing waves at world position p; they oscillate in place, not travel.
+vec3 wave(vec2 p) {
+	vec2 dirs[4] = vec2[](vec2(1.0, 0.0), vec2(0.0, 1.0), normalize(vec2(1.0, 1.0)), normalize(vec2(1.0, -1.0)));
+	float amps[4] = float[](1.0, 0.8, 0.6, 0.5);
+	float freqs[4] = float[](1.0, 1.3, 1.9, 2.6);
+	float offsets[4] = float[](0.0, 1.7, 3.1, 4.6);
+	vec3 result = vec3(0.0);
+	for (int i = 0; i < 4; i++) {
+		float k = 6.2831853 / wave_length * freqs[i];
+		float phase = dot(dirs[i], p) * k + offsets[i];
+		float pulse = sin(TIME * wave_speed * freqs[i] + offsets[i] * 2.0);
+		float a = wave_amplitude * amps[i];
+		result.x += a * sin(phase) * pulse;
+		result.yz += a * k * cos(phase) * pulse * dirs[i];
+	}
+	return result;
+}
+
+void vertex() {
+	vec3 w = wave((MODEL_MATRIX * vec4(VERTEX, 1.0)).xz);
+	VERTEX.y += w.x;
+	NORMAL = normalize(vec3(-w.y, 1.0, -w.z));
+}
 
 void fragment() {
 	float raw_depth = texture(depth_texture, SCREEN_UV).r;
