@@ -72,7 +72,7 @@ shadow_enabled = true
 
 [node name="texture_vertex_blending" parent="." unique_id=1103821469 instance=ExtResource("1_x8ynk")]
 
-[node name="Plane" parent="texture_vertex_blending" index="0" unique_id=1613005735]
+[node name="Plane" parent="texture_vertex_blending" index="0" unique_id=529993327]
 surface_material_override/0 = SubResource("ShaderMaterial_pku14")
 
 [node name="PlayerController" type="CharacterBody3D" parent="." unique_id=1198752897]
@@ -85,7 +85,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_ng5oy")
 
 [node name="PlayerCamera" type="Node3D" parent="PlayerController" unique_id=356558221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 script = ExtResource("7_w0fqq")
 metadata/_custom_type_script = "uid://c3har02jdtusj"
+
+[node name="Camera3D" type="Camera3D" parent="PlayerController/PlayerCamera" unique_id=354325021]
 
 [editable path="texture_vertex_blending"]

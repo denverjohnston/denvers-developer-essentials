@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://cv5yqpjbxk81f"]
 
 [ext_resource type="Script" uid="uid://b27htxt6od645" path="res://_demo/demos.gd" id="1_dn1tx"]
+[ext_resource type="Theme" uid="uid://dloo02nx7yd1q" path="res://_demo/demos_theme.tres" id="1_oc6sw"]
 [ext_resource type="Script" uid="uid://cfu324hmn5uf1" path="res://_demo/demos_button.gd" id="1_tqllu"]
 [ext_resource type="PackedScene" uid="uid://cv26dd0lcs83i" path="res://rotation/demo_movement_rotation.tscn" id="2_udr8e"]
 [ext_resource type="PackedScene" uid="uid://c6u2brpcp8aw5" path="res://camera/demo_camera.tscn" id="3_37f04"]
 [ext_resource type="PackedScene" uid="uid://bhmbxgsbxvwf0" path="res://interaction/demo_interaction.tscn" id="4_50fry"]
 [ext_resource type="PackedScene" uid="uid://blskfka0a2y3h" path="res://shaders/demo_shaders.tscn" id="5_4n5ks"]
 [ext_resource type="PackedScene" uid="uid://e6rb32iy6hmu" path="res://inventory/demo_inventory.tscn" id="6_tvg7k"]
+[ext_resource type="PackedScene" uid="uid://domt3b0kftc45" path="res://textures/demo_vertex_texture.tscn" id="9_gsm3r"]
 
 [node name="Demos" type="Control" unique_id=1780301322]
 layout_mode = 3
@@ -15,7 +17,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_oc6sw")
 script = ExtResource("1_dn1tx")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=158128514]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.81630284, 0.81630284, 0.81630284, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1121267278]
 layout_mode = 1
@@ -24,81 +36,68 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 30
-theme_override_constants/margin_bottom = 30
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="Label" type="Label" parent="MarginContainer" unique_id=1467592953]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "Demos"
-
-[node name="TabContainer" type="TabContainer" parent="MarginContainer" unique_id=63542626]
-layout_mode = 2
-tab_alignment = 1
-current_tab = 0
-
-[node name="Transforms" type="GridContainer" parent="MarginContainer/TabContainer" unique_id=1471926303]
+[node name="Transforms" type="GridContainer" parent="MarginContainer" unique_id=1471926303]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
 columns = 3
-metadata/_tab_index = 0
 
-[node name="Button" type="Button" parent="MarginContainer/TabContainer/Transforms" unique_id=414143632]
+[node name="Button" type="Button" parent="MarginContainer/Transforms" unique_id=414143632]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Rotation"
+theme_override_font_sizes/font_size = 24
+text = "Character rotation"
 script = ExtResource("1_tqllu")
 demo_scene = ExtResource("2_udr8e")
 
-[node name="Button2" type="Button" parent="MarginContainer/TabContainer/Transforms" unique_id=1676266801]
+[node name="Button2" type="Button" parent="MarginContainer/Transforms" unique_id=1676266801]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Camera"
+theme_override_font_sizes/font_size = 24
+text = "First-person camera controls"
 script = ExtResource("1_tqllu")
 demo_scene = ExtResource("3_37f04")
 
-[node name="Button3" type="Button" parent="MarginContainer/TabContainer/Transforms" unique_id=2102646075]
+[node name="Button3" type="Button" parent="MarginContainer/Transforms" unique_id=2102646075]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
 text = "Interaction"
 script = ExtResource("1_tqllu")
 demo_scene = ExtResource("4_50fry")
 
-[node name="Button4" type="Button" parent="MarginContainer/TabContainer/Transforms" unique_id=214104231]
+[node name="Button4" type="Button" parent="MarginContainer/Transforms" unique_id=214104231]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_font_sizes/font_size = 24
 text = "Shaders"
 script = ExtResource("1_tqllu")
 demo_scene = ExtResource("5_4n5ks")
 
-[node name="Button5" type="Button" parent="MarginContainer/TabContainer/Transforms" unique_id=1506558099]
+[node name="Button5" type="Button" parent="MarginContainer/Transforms" unique_id=1506558099]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Inventory"
+theme_override_font_sizes/font_size = 24
+text = "Inventory system"
 script = ExtResource("1_tqllu")
 demo_scene = ExtResource("6_tvg7k")
 
-[node name="Button6" type="Button" parent="MarginContainer/TabContainer/Transforms" unique_id=835441135]
+[node name="Button6" type="Button" parent="MarginContainer/Transforms" unique_id=835441135]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Texture"
+theme_override_font_sizes/font_size = 24
+text = "Vertex-painted terrain"
 script = ExtResource("1_tqllu")
-
-[node name="Player" type="GridContainer" parent="MarginContainer/TabContainer" unique_id=147319707]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="Models" type="GridContainer" parent="MarginContainer/TabContainer" unique_id=959755454]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 2
+demo_scene = ExtResource("9_gsm3r")

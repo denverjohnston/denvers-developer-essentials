@@ -1,0 +1,42 @@
+[gd_resource type="Theme" format=3 uid="uid://dloo02nx7yd1q"]
+
+[ext_resource type="FontFile" uid="uid://brf01mj6pvqam" path="res://_demo/Rubik-VariableFont_wght.ttf" id="1_7bs7c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_in06j"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.96474224, 0.96474224, 0.9647421, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fa5ty"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y5xed"]
+bg_color = Color(0.8187402, 0.81874025, 0.81874, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_fmrvw"]
+base_font = ExtResource("1_7bs7c")
+variation_opentype = {
+2003265652: 400
+}
+
+[resource]
+default_font = SubResource("FontVariation_fmrvw")
+Button/colors/font_color = Color(0.29114094, 0.29114023, 0.29114038, 1)
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/styles/hover = SubResource("StyleBoxFlat_in06j")
+Button/styles/normal = SubResource("StyleBoxFlat_fa5ty")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_y5xed")

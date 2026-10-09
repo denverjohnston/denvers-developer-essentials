@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://big73griq3r2e"]
 
 [ext_resource type="Script" uid="uid://cbrl8fgmbo5cm" path="res://_demo/demo_hud.gd" id="1_i6224"]
+[ext_resource type="Theme" uid="uid://dloo02nx7yd1q" path="res://_demo/demos_theme.tres" id="2_c1un6"]
+[ext_resource type="FontFile" uid="uid://brf01mj6pvqam" path="res://_demo/Rubik-VariableFont_wght.ttf" id="3_y5xed"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_ithid"]
 device = -1
@@ -9,6 +11,18 @@ unicode = 98
 
 [sub_resource type="Shortcut" id="Shortcut_tvg7k"]
 events = [SubResource("InputEventKey_ithid")]
+
+[sub_resource type="FontVariation" id="FontVariation_onkrr"]
+base_font = ExtResource("3_y5xed")
+variation_opentype = {
+2003265652: 600
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_7bs7c"]
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_jkly6"]
+font_color = Color(0, 0, 0, 1)
 
 [node name="HUD" type="CanvasLayer" unique_id=826208792]
 script = ExtResource("1_i6224")
@@ -20,6 +34,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 31.0
 grow_horizontal = 2
+theme = ExtResource("2_c1un6")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=709153837]
 layout_mode = 2
@@ -40,10 +55,13 @@ text = "[B] Back to demos"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_fonts/font = SubResource("FontVariation_onkrr")
 text = "[ADD INSTRUCTIONS]"
+label_settings = SubResource("LabelSettings_7bs7c")
 
 [node name="Description" type="Label" parent="PanelContainer/MarginContainer" unique_id=374268252]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 text = "[ADD DESCRIPTION]"
+label_settings = SubResource("LabelSettings_jkly6")

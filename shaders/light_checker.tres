@@ -1,10 +1,21 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://dus1sriy6vfy4"]
 
-[ext_resource type="Shader" uid="uid://cc8jssp74k2kd" path="res://shaders/checker_pattern.gdshader" id="1_guhup"]
+[sub_resource type="Shader" id="Shader_iva0n"]
+code = "shader_type spatial;
+
+uniform float tile_scale = 8.0;
+uniform vec4 color_a: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+uniform vec4 color_b: source_color = vec4(1.0, 1.0, 1.0, 1.0);
+
+void fragment() {
+	vec2 tile = floor(UV * tile_scale);
+	float blend_factor = mod(tile.x + tile.y, 2.0);
+	ALBEDO = mix(color_a.rgb, color_b.rgb, blend_factor);
+}"
 
 [resource]
 render_priority = 0
-shader = ExtResource("1_guhup")
+shader = SubResource("Shader_iva0n")
 shader_parameter/tile_scale = 64.0
-shader_parameter/color_a = Color(0.8880645, 0.79595864, 0.62458503, 1)
-shader_parameter/color_b = Color(1, 0.89165515, 0.6748467, 1)
+shader_parameter/color_a = Color(1, 1, 1, 1)
+shader_parameter/color_b = Color(0.85, 0.85, 0.85, 1)

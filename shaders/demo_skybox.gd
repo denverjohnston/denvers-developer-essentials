@@ -1,7 +1,10 @@
+@tool
 extends Node3D
 
 
 @export_category("Config")
+@export var enabled: bool = false
+
 @export var world_environment: WorldEnvironment
 @export_range(0.0, 1.0) var time_of_day: float = 0.2730000129675
 @export_range(0.5, 3600.0, 0.5) var day_duration_seconds: float = 120.0
@@ -18,7 +21,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	_advance_time(delta)
+	if enabled:
+		_advance_time(delta)
 	_sync_time_of_day()
 
 
