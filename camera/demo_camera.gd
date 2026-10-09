@@ -10,6 +10,7 @@ enum Mode {
 
 # Physics layer 5, shared by the camera area and water triggers.
 const WATER_TRIGGER_LAYER: int = 1 << 4
+const UNDERWATER_EFFECT_SCENE: PackedScene = preload("res://shaders/quad_underwater_effect.tscn")
 
 var yaw_input: float = 0.0
 var pitch_input: float = 0.0
@@ -57,6 +58,13 @@ func _ready() -> void:
 	# Match the water area trigger's collision layer/mask.
 	camera_area.collision_layer = WATER_TRIGGER_LAYER
 	camera_area.collision_mask = WATER_TRIGGER_LAYER
+	
+	# Add a hidden underwater effect that water areas toggle.
+	if not camera.get_node_or_null("UnderwaterEffect"):
+		var effect := UNDERWATER_EFFECT_SCENE.instantiate() as UnderwaterEffect
+		effect.name = "UnderwaterEffect"
+		effect.visible = false
+		camera.add_child(effect)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

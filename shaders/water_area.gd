@@ -2,7 +2,6 @@ extends Node3D
 
 
 @export var area: Area3D
-@export var underwater_effect_scene: PackedScene
 
 
 func _ready() -> void:
@@ -16,30 +15,17 @@ func _ready() -> void:
 
 
 func _on_area_entered(camera_area: Area3D) -> void:
-	var camera := camera_area.get_parent() as Camera3D
-	if not camera:
-		return
-	
-	var effect := camera.get_node_or_null("UnderwaterEffect") as UnderwaterEffect
-	if effect:
-		_configure_underwater_effect(effect)
-		return
-	
-	effect = underwater_effect_scene.instantiate() as UnderwaterEffect
-	if not effect:
-		return
-	effect.name = "UnderwaterEffect"
-	camera.add_child(effect)
-	_configure_underwater_effect(effect)
+	var effect := _get_effect(camera_area)
+	var water_surface := area.get_parent() as Node3D
+	if effect and water_surface:
+		effect.enter_water(water_surface.global_position, water_surface.global_basis.y)
 
 
 func _on_area_exited(camera_area: Area3D) -> void:
-	var effect := camera_area.get_parent().get_node_or_null("UnderwaterEffect") as UnderwaterEffect
+	var effect := _get_effect(camera_area)
 	if effect:
-		effect.queue_free()
+		effect.exit_water()
 
 
-func _configure_underwater_effect(effect: UnderwaterEffect) -> void:
-	var water_surface := area.get_parent() as Node3D
-	if water_surface:
-		effect.set_water_plane(water_surface.global_position, water_surface.global_basis.y)
+func _get_effect(camera_area: Area3D) -> UnderwaterEffect:
+	return camera_area.get_parent().get_node_or_null("UnderwaterEffect") as UnderwaterEffect

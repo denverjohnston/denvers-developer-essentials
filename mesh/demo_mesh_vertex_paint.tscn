@@ -48,28 +48,9 @@ shader_parameter/uv_scale = 6.0
 
 [node name="Node3D" type="Node3D" unique_id=1021618974]
 
-[node name="Environment" type="Node3D" parent="." unique_id=542855268 node_paths=PackedStringArray("world_environment")]
-script = ExtResource("8_k4d0q")
-world_environment = NodePath("WorldEnvironment")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment" unique_id=1705161991]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=542855268]
 environment = SubResource("Environment_q74uo")
-
-[node name="Stars" type="Node3D" parent="Environment" unique_id=1985669951]
-transform = Transform3D(1, 0, 0, 0, -0.1440109, -0.9895761, 0, 0.9895761, -0.1440109, 0, 0, 0)
-
-[node name="Sun" type="DirectionalLight3D" parent="Environment/Stars" unique_id=1889195545]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-light_color = Color(1, 0.92156863, 0.8666667, 1)
-shadow_enabled = true
-
-[node name="Moon" type="DirectionalLight3D" parent="Environment/Stars" unique_id=432183298]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
-light_color = Color(0.5882353, 0.7764706, 1, 1)
-light_energy = 0.02
-shadow_enabled = true
+script = ExtResource("8_k4d0q")
 
 [node name="texture_vertex_blending" parent="." unique_id=1103821469 instance=ExtResource("1_x8ynk")]
 

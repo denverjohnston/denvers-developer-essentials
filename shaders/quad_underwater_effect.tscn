@@ -8,7 +8,6 @@ render_priority = 0
 shader = ExtResource("2_fuku3")
 shader_parameter/extinction_coefficients = Vector3(0.65, 0.2, 0.08)
 shader_parameter/scattering_color = Color(0.03, 0.3, 0.42, 1)
-shader_parameter/reflection_color = Color(0.48, 0.68, 0.8, 1)
 shader_parameter/water_plane_point = Vector3(0, 1.275, 0)
 shader_parameter/water_plane_normal = Vector3(0, 1, 0)
 shader_parameter/max_water_thickness = 20.0

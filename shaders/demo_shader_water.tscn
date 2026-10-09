@@ -2,11 +2,35 @@
 
 [ext_resource type="Script" uid="uid://bc32ujxmaxm8j" path="res://character/character_controller.gd" id="1_cjhyd"]
 [ext_resource type="PackedScene" uid="uid://big73griq3r2e" path="res://_demo/demo_hud.tscn" id="1_r2egs"]
+[ext_resource type="Shader" uid="uid://b0xws0ucnv2kc" path="res://shaders/sky.gdshader" id="2_b4p7y"]
 [ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://camera/demo_camera.gd" id="2_keh1x"]
 [ext_resource type="Material" uid="uid://dus1sriy6vfy4" path="res://shaders/mat_checker.tres" id="4_uts0q"]
 [ext_resource type="Script" uid="uid://bbytbvs873ie4" path="res://shaders/water_area.gd" id="6_no80x"]
 [ext_resource type="Shader" uid="uid://dovr0anlk2bgo" path="res://shaders/water.gdshader" id="6_wlc4i"]
-[ext_resource type="PackedScene" uid="uid://fgfog0y4ydq7" path="res://shaders/quad_underwater_effect.tscn" id="7_underwater_scene"]
+[ext_resource type="Script" uid="uid://bes00t4dsep5q" path="res://shaders/demo_shader_skybox.gd" id="8_m13tu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n5xr4"]
+shader = ExtResource("2_b4p7y")
+shader_parameter/day_horizon = Color(0.75, 0.82, 1, 1)
+shader_parameter/day_zenith = Color(0.2, 0.6, 1, 1)
+shader_parameter/night_horizon = Color(0.08, 0.11, 0.2, 1)
+shader_parameter/night_zenith = Color(0.02, 0.04, 0.1, 1)
+shader_parameter/sunrise_horizon = Color(0.9, 0.65, 0.5, 1)
+shader_parameter/sunrise_zenith = Color(0.3, 0.5, 0.8, 1)
+shader_parameter/sunset_horizon = Color(0.8, 0.3, 0.2, 1)
+shader_parameter/sunset_zenith = Color(0.34, 0.16, 0.3, 1)
+shader_parameter/evening_horizon = Color(0.08, 0.11, 0.26, 1)
+shader_parameter/evening_zenith = Color(0.015, 0.025, 0.11, 1)
+shader_parameter/moon_color = Color(0.72, 0.82, 1, 1)
+shader_parameter/time_of_day = 0.676
+shader_parameter/star_color = Color(0.75, 0.82, 1, 1)
+
+[sub_resource type="Sky" id="Sky_af2ck"]
+sky_material = SubResource("ShaderMaterial_n5xr4")
+
+[sub_resource type="Environment" id="Environment_2fwco"]
+background_mode = 2
+sky = SubResource("Sky_af2ck")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ng5oy"]
 
@@ -16,6 +40,9 @@ shader = ExtResource("6_wlc4i")
 shader_parameter/extinction_coefficients = Vector3(0.65, 0.2, 0.08)
 shader_parameter/scattering_color = Color(0.03, 0.3, 0.42, 1)
 shader_parameter/max_water_thickness = 20.0
+shader_parameter/refraction_strength = 1.0
+shader_parameter/scattering_strength = 1.0
+shader_parameter/reflection_strength = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_water"]
 material = SubResource("ShaderMaterial_no80x")
@@ -29,6 +56,12 @@ size = Vector3(30, 3, 30)
 [node name="HUD" parent="." unique_id=826208792 instance=ExtResource("1_r2egs")]
 instructions_text = "Browse various shaders"
 description_text = "Library of shaders"
+
+[node name="DemoSkybox" type="WorldEnvironment" parent="." unique_id=1063535309]
+environment = SubResource("Environment_2fwco")
+script = ExtResource("8_m13tu")
+time_of_day = 0.676
+metadata/_custom_type_script = "uid://bes00t4dsep5q"
 
 [node name="PlayerController" type="CharacterBody3D" parent="." unique_id=2022266851]
 script = ExtResource("1_cjhyd")
@@ -45,17 +78,17 @@ script = ExtResource("2_keh1x")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 
 [node name="WaterPlane" type="MeshInstance3D" parent="Pool" unique_id=1012092872 node_paths=PackedStringArray("area")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.31117988, -15)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
 mesh = SubResource("PlaneMesh_water")
 script = ExtResource("6_no80x")
 area = NodePath("Area3D")
-underwater_effect_scene = ExtResource("7_underwater_scene")
 
 [node name="Area3D" type="Area3D" parent="Pool/WaterPlane" unique_id=457638662]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pool/WaterPlane/Area3D" unique_id=1428774022]
 shape = SubResource("BoxShape3D_ng5oy")
+debug_color = Color(0, 1, 0.75, 1)
 
 [node name="Floor" type="CSGBox3D" parent="Pool" unique_id=201930557]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, -15)
