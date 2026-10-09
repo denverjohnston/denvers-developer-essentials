@@ -7,9 +7,6 @@ uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nea
 uniform vec3 extinction_coefficients = vec3(0.65, 0.20, 0.08);
 uniform vec3 scattering_color : source_color = vec3(0.03, 0.30, 0.42);
 uniform float max_water_thickness = 20.0;
-uniform float refraction_strength : hint_range(0.0, 1.0) = 1.0;
-uniform float scattering_strength : hint_range(0.0, 1.0) = 1.0;
-uniform float reflection_strength : hint_range(0.0, 1.0) = 1.0;
 
 void fragment() {
 	float raw_depth = texture(depth_texture, SCREEN_UV).r;
@@ -37,9 +34,9 @@ void fragment() {
 	float fresnel = 0.02 + 0.98 * pow(1.0 - view_angle, 5.0);
 
 	// Refracted scene is already lit, so it is emitted; the engine adds sky reflections via specular IBL.
-	EMISSION = scene_color * transmittance * (1.0 - fresnel) * refraction_strength;
-	ALBEDO = in_scattering * (1.0 - fresnel) * scattering_strength;
-	SPECULAR = 0.5 * reflection_strength;
+	EMISSION = scene_color * transmittance * (1.0 - fresnel);
+	ALBEDO = in_scattering * (1.0 - fresnel);
+	SPECULAR = 0.5;
 	ROUGHNESS = 0.05;
 	ALPHA = 1.0;
 }

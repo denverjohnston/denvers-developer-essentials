@@ -18,7 +18,6 @@ func _ready() -> void:
 	effect_material = fullscreen_quad.material_override.duplicate() as ShaderMaterial
 	fullscreen_quad.material_override = effect_material
 	effect_material.set_shader_parameter("surface_margin", SURFACE_MARGIN)
-	effect_material.set_shader_parameter("light_level", _estimate_light_level())
 
 
 func _process(_delta: float) -> void:
@@ -26,9 +25,8 @@ func _process(_delta: float) -> void:
 		return
 	effect_material.set_shader_parameter("light_level", _estimate_light_level())
 	# Hide by camera height, not area exit, so it doesn't depend on where the area's edge sits.
-	if water_count == 0:
-		if (global_position - water_point).dot(water_normal) >= SURFACE_MARGIN:
-			visible = false
+	if water_count == 0 and (global_position - water_point).dot(water_normal) >= SURFACE_MARGIN:
+		visible = false
 
 
 # Counted so overlapping water bodies don't hide the effect early.
@@ -66,4 +64,4 @@ func set_water_plane(point: Vector3, normal: Vector3) -> void:
 	water_point = point
 	water_normal = normal.normalized()
 	effect_material.set_shader_parameter("water_plane_point", point)
-	effect_material.set_shader_parameter("water_plane_normal", normal.normalized())
+	effect_material.set_shader_parameter("water_plane_normal", water_normal)

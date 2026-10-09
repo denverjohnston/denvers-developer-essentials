@@ -38,7 +38,8 @@ void fragment() {
 	vec3 ndc = vec3(sample_uv * 2.0 - 1.0, max(raw_depth, 0.000001));
 	vec4 scene_view_h = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
 	vec3 view_ray = normalize(scene_view_h.xyz);
-	float scene_distance = max_water_thickness;
+	// Sky pixels have no depth; use a far distance so the surface crossing isn't cut off at max thickness.
+	float scene_distance = 10000.0;
 	if (raw_depth > 0.000001) {
 		vec3 scene_view = scene_view_h.xyz / scene_view_h.w;
 		scene_distance = length(scene_view);
@@ -59,13 +60,11 @@ void fragment() {
 		distance_to_surface = clamp(-camera_side / ray_plane_dot, 0.0, scene_distance);
 	}
 
-	float water_thickness = 0.0;
+	float water_thickness = distance_to_surface;
 	if (camera_underwater && scene_underwater) {
 		water_thickness = scene_distance;
-	} else if (crosses_surface) {
-		water_thickness = camera_underwater
-			? distance_to_surface
-			: scene_distance - distance_to_surface;
+	} else if (!camera_underwater) {
+		water_thickness = scene_distance - distance_to_surface;
 	}
 	water_thickness = min(water_thickness, max_water_thickness);
 	vec3 transmittance = exp(-extinction_coefficients * water_thickness);

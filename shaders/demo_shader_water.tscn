@@ -22,7 +22,7 @@ shader_parameter/sunset_zenith = Color(0.34, 0.16, 0.3, 1)
 shader_parameter/evening_horizon = Color(0.08, 0.11, 0.26, 1)
 shader_parameter/evening_zenith = Color(0.015, 0.025, 0.11, 1)
 shader_parameter/moon_color = Color(0.72, 0.82, 1, 1)
-shader_parameter/time_of_day = 0.676
+shader_parameter/time_of_day = 0.2730000129675
 shader_parameter/star_color = Color(0.75, 0.82, 1, 1)
 
 [sub_resource type="Sky" id="Sky_af2ck"]
@@ -40,9 +40,6 @@ shader = ExtResource("6_wlc4i")
 shader_parameter/extinction_coefficients = Vector3(0.65, 0.2, 0.08)
 shader_parameter/scattering_color = Color(0.03, 0.3, 0.42, 1)
 shader_parameter/max_water_thickness = 20.0
-shader_parameter/refraction_strength = 1.0
-shader_parameter/scattering_strength = 1.0
-shader_parameter/reflection_strength = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_water"]
 material = SubResource("ShaderMaterial_no80x")
@@ -50,6 +47,8 @@ size = Vector2(30, 30)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ng5oy"]
 size = Vector3(30, 3, 30)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ng5oy"]
 
 [node name="Shaders" type="Node3D" unique_id=1201720536]
 
@@ -60,7 +59,6 @@ description_text = "Library of shaders"
 [node name="DemoSkybox" type="WorldEnvironment" parent="." unique_id=1063535309]
 environment = SubResource("Environment_2fwco")
 script = ExtResource("8_m13tu")
-time_of_day = 0.676
 metadata/_custom_type_script = "uid://bes00t4dsep5q"
 
 [node name="PlayerController" type="CharacterBody3D" parent="." unique_id=2022266851]
@@ -78,7 +76,7 @@ script = ExtResource("2_keh1x")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 
 [node name="WaterPlane" type="MeshInstance3D" parent="Pool" unique_id=1012092872 node_paths=PackedStringArray("area")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -15)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.32236743, -15)
 mesh = SubResource("PlaneMesh_water")
 script = ExtResource("6_no80x")
 area = NodePath("Area3D")
@@ -137,3 +135,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.5, -2, -15)
 use_collision = true
 size = Vector3(1, 4, 30)
 material = ExtResource("4_uts0q")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="." unique_id=620964232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -23.201439)
+radius = 2.0
+material = SubResource("StandardMaterial3D_ng5oy")
