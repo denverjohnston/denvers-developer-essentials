@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://cmsdjf5r2c0de"]
+
+[ext_resource type="Script" uid="uid://bc32ujxmaxm8j" path="res://character/character_controller.gd" id="1_80m6y"]
+[ext_resource type="PackedScene" uid="uid://big73griq3r2e" path="res://_demo/demo_hud.tscn" id="1_lte1a"]
+[ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://camera/demo_camera.gd" id="2_a5ok8"]
+[ext_resource type="PackedScene" uid="uid://x4l87q8jfmsp" path="res://character/character_footsteps_terrain.blend" id="3_r6ro5"]
+[ext_resource type="Script" uid="uid://dpfqfgxmcsiie" path="res://foostep_audio_player.gd" id="5_astko"]
+[ext_resource type="Script" uid="uid://ce5sccvmqyimx" path="res://character/character_footsteps_terrain.gd" id="5_oyh6x"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bfsg8"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_80m6y"]
+sky_material = SubResource("ProceduralSkyMaterial_bfsg8")
+
+[sub_resource type="Environment" id="Environment_a5ok8"]
+background_mode = 2
+sky = SubResource("Sky_80m6y")
+glow_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ng5oy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nwvy1"]
+vertex_color_use_as_albedo = true
+
+[node name="FootstepSounds" type="Node3D" unique_id=846530503]
+
+[node name="HUD" parent="." unique_id=826208792 instance=ExtResource("1_lte1a")]
+instructions_text = "Walk on the vertex colors"
+description_text = "Different sounds assigned to vertex colors"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2089064039]
+environment = SubResource("Environment_a5ok8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1524070836]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CharacterController" type="CharacterBody3D" parent="." unique_id=1842732658 node_paths=PackedStringArray("camera")]
+script = ExtResource("1_80m6y")
+camera = NodePath("DemoCamera")
+metadata/_custom_type_script = "uid://bc32ujxmaxm8j"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterController" unique_id=2061461913]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_ng5oy")
+
+[node name="DemoCamera" type="Node3D" parent="CharacterController" unique_id=1394674973 node_paths=PackedStringArray("camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("2_a5ok8")
+camera = NodePath("Camera3D")
+metadata/_custom_type_script = "uid://c3har02jdtusj"
+
+[node name="Camera3D" type="Camera3D" parent="CharacterController/DemoCamera" unique_id=945844931]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer3D" parent="CharacterController" unique_id=642109502 node_paths=PackedStringArray("timer", "ray_cast_3d")]
+script = ExtResource("5_astko")
+timer = NodePath("Timer")
+ray_cast_3d = NodePath("RayCast3D")
+
+[node name="RayCast3D" type="RayCast3D" parent="CharacterController/AudioStreamPlayer" unique_id=833052363]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35911852, 0)
+enabled = false
+
+[node name="Timer" type="Timer" parent="CharacterController/AudioStreamPlayer" unique_id=933557790]
+autostart = true
+
+[node name="character_footsteps_terrain" parent="." unique_id=70526849 node_paths=PackedStringArray("mesh_instance") instance=ExtResource("3_r6ro5")]
+script = ExtResource("5_oyh6x")
+mesh_instance = NodePath("Plane")
+
+[node name="Plane" parent="character_footsteps_terrain" index="0" unique_id=1268986838]
+surface_material_override/0 = SubResource("StandardMaterial3D_nwvy1")
+
+[editable path="character_footsteps_terrain"]

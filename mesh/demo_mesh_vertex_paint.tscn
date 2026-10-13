@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://c3har02jdtusj" path="res://camera/demo_camera.gd" id="7_w0fqq"]
 [ext_resource type="Texture2D" uid="uid://va2mqhkb646b" path="res://mesh/textures/brown_mud_leaves_01_diff_1k.jpg" id="7_x2j47"]
 [ext_resource type="Script" uid="uid://bes00t4dsep5q" path="res://shaders/demo_shader_skybox.gd" id="8_k4d0q"]
-[ext_resource type="Shader" uid="uid://b0xws0ucnv2kc" path="res://shaders/sky.gdshader" id="9_x2j47"]
+[ext_resource type="Shader" uid="uid://b0xws0ucnv2kc" path="res://shaders/sky_001.gdshader" id="9_x2j47"]
 [ext_resource type="PackedScene" uid="uid://big73griq3r2e" path="res://_demo/demo_hud.tscn" id="10_1yrbw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jrc6j"]

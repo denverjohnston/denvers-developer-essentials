@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://box1to1raydrb"]
+
+[ext_resource type="Shader" uid="uid://jpe8gwhepmv4" path="res://shaders/sky_002.gdshader" id="1_o28en"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4l53m"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_c7ah2"]
+width = 128
+height = 128
+noise = SubResource("FastNoiseLite_4l53m")
+seamless = true
+normalize = false
+seamless_blend_skirt = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eprvn"]
+shader = ExtResource("1_o28en")
+shader_parameter/cloud_noise = SubResource("NoiseTexture2D_c7ah2")
+
+[sub_resource type="Sky" id="Sky_o28en"]
+sky_material = SubResource("ShaderMaterial_eprvn")
+
+[sub_resource type="Environment" id="Environment_4l53m"]
+background_mode = 2
+sky = SubResource("Sky_o28en")
+glow_enabled = true
+
+[node name="SimpleSky" type="Node3D" unique_id=1696045624]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1687252279]
+environment = SubResource("Environment_4l53m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1256691980]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true

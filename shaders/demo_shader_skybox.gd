@@ -3,7 +3,7 @@ class_name DemoSkybox
 extends WorldEnvironment
 
 
-const SKY_SHADER: Shader = preload("res://shaders/sky.gdshader")
+const SKY_SHADER: Shader = preload("res://shaders/sky_001.gdshader")
 
 
 @export_category("Config")
